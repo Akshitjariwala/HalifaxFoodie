@@ -1,19 +1,18 @@
 import React , {useState} from 'react'
-import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import {BrowserRouter, Switch, Link, Route} from 'react-router-dom';
 import { getRestaurantList } from '../service';
  
-const RestaurantList = () => {
+const RestaurantPage = () => {
     const history = useHistory();
     const location = useLocation();
 
     const[restaurantsList,setRestaurantsList] = useState("")
 
     useEffect(() => {
-        var temp = fetchResto();
+        //var temp = fetchResto();
         console.log(restaurantsList);
     })
 
@@ -25,7 +24,6 @@ const RestaurantList = () => {
     }
 
      const handleRestaurentClick = (event,data) => {
-        history.push({pathname:'/RestaurantPage',restaurantEmail:data});
         alert(data);
     }
 
@@ -83,4 +81,4 @@ const RestaurantList = () => {
 );
 }
 
-export default RestaurantList;
+export default RestaurantPage;

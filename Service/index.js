@@ -85,23 +85,40 @@ app.get("/GetRestaurantList", (req, res) => {
 });
 
 
-app.post("/GetRole", (req, res) => {
-    var userEmail = JSON.stringify(req.body)
-    console.log(userEmail);
-    var temp = fetchRole('akshit787@gmail.com');
+app.post("/FetchRole", (req, res) => {
+    var userEmail = req.body.userEmail
+    var temp = fetchRole(userEmail); //akshit787@gmail.com ownerkfc@gmail.com 
     
     async function fetchRole(userEmail) {
-      var userRef = firestore.collection('Users');
-      var snapshot = await userRef.get(userEmail);
-      snapshot.forEach(doc => 
-        {
-          if(doc.id === userEmail){
-            console.log(doc.id, '=>', doc.data());
-            userRole = doc.data().userRole;
-            return userRole;
-          }
-        });
-        res.status(200).send({userRole:userRole});
+      var userRole;
+      const cityRef = firestore.collection('Users').doc(userEmail);
+      const doc = await cityRef.get();
+      if(doc.exists){
+        console.log("Inside Function");
+        var userRef = firestore.collection('Users');
+        var snapshot = await userRef.get(userEmail);
+        snapshot.forEach(doc => 
+          {
+            if(doc.id === userEmail){
+              console.log(doc.id, '=>', doc.data());
+              userRole = doc.data().userRole;
+            }
+          });
+          console.log(userRole)
+          res.status(200).send({userRole:userRole});
+      } else {
+        userRef = firestore.collection('Restaurants');
+        snapshot = await userRef.get(userEmail); 
+        snapshot.forEach(doc => 
+          {
+            if(doc.id === userEmail){
+              console.log(doc.id, '=>', doc.data());
+              userRole = doc.data().userRole;
+            }
+          });
+          console.log(userRole)
+          res.status(200).send({userRole:userRole});
+      }
     }
   });
 

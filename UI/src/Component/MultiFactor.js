@@ -13,6 +13,10 @@ const MultiFactor = () => {
         userAnswer.answer = ""
     }
 
+    useEffect(() => {
+        setUserResponse(location.answer)
+    })
+
     const[userAnswer,setUserAnswer] = useState("")
     const[sequrity_question,setSequrity_question] = useState("")
     const[userAnswerError, setUserAnswerError] = useState("");
@@ -35,10 +39,9 @@ const MultiFactor = () => {
 
     const handleMFA = (event) => {
         event.preventDefault()
-        setUserResponse(location.answer)
         console.log(location.answer)
         if(validate(userAnswer)) {
-            if(userResponse == userAnswer){
+            if(userResponse === userAnswer){
                 if(location.role == "user"){
                     history.push("/UserHome");
                 } else {

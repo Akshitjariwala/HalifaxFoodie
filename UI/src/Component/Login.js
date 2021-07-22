@@ -60,12 +60,15 @@ const Login = () => {
             var userId = response.uid;
             var userEmail = userData.userEmail;
             if(res.status == 200){
-                let role = await getRole(userEmail);
+                let role = await getRole(userData);
                 if(role.status == 200){
                     var resRole = role.data;
                     var userRole = resRole.userRole;
+                    console.log(resRole)
+                    console.log(userId)
                     var response = await axios.post('https://ti9nlzbjo4.execute-api.us-east-1.amazonaws.com/default/multifactorVerification?userID='+userId+'&role='+userRole)
                     var responseFromLambda = response.data;
+                    console.log(responseFromLambda)
                     var securityQuestion = responseFromLambda.securityQuestion;
                     var answer = responseFromLambda.answer;
                     history.push({pathname:'/MultiFactor',securityQuestion:securityQuestion,answer:answer,role:userRole});
