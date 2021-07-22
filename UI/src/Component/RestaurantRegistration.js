@@ -147,8 +147,6 @@ const RestaurantRegistration = () => {
         event.preventDefault()
         if(validate(restaurantRegistration)){
             console.log(restaurantRegistration)
-            /*axios.post('http://localhost:3001/RegisterRestaurant',restaurantRegistration).then((response)=>
-            console.log(response));*/
             let res = await registerRestaurant(restaurantRegistration)
             console.log(res.status);
             if(res.status == 200){
@@ -157,7 +155,6 @@ const RestaurantRegistration = () => {
             } else {
                 window.alert("User Registration Failed.")
             }
-            //initialState()
         }
     }
 

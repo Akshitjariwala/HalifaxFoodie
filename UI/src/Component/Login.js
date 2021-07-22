@@ -71,7 +71,7 @@ const Login = () => {
                     console.log(responseFromLambda)
                     var securityQuestion = responseFromLambda.securityQuestion;
                     var answer = responseFromLambda.answer;
-                    history.push({pathname:'/MultiFactor',securityQuestion:securityQuestion,answer:answer,role:userRole});
+                    history.push({pathname:'/MultiFactor',securityQuestion:securityQuestion,answer:answer,role:userRole,email:userEmail});
                 } else {
                     window.alert("Role Fetching Failed.");
                 }

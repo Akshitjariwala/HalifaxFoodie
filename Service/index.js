@@ -180,6 +180,21 @@ app.post("/Login", (req, res) => {
     }
 });
 
+
+app.post("/SaveMenuItem", (req, res) => {
+    var menuItem = req.body;
+    var docName = req.body.restaurantName+"_"+req.body.itemName
+      firestore.collection('RestaurantMenuItems').doc(docName).set(menuItem).then(() => {
+          console.log('Menu Item added!');
+          res.status(200).send();
+      }).catch(function(error){
+             console.log(error.code);  
+             console.log(error.message);
+             window.alert("Error Message : "+error.message);
+             res.status(400).send();
+         })
+});
+
 app.listen(3001, () => {
   console.log("Login server is running on port 3001");
 });

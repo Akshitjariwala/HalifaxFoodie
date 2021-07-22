@@ -33,6 +33,14 @@ export const loginUser = (payload) => {
         .catch(err => { return err.response })
 };
 
+export const saveMenuItem = (payload) => {
+    return axios.post('http://localhost:3001/SaveMenuItem', payload)
+        .then((res) => {
+            return res;
+        })
+        .catch(err => { return err.response })
+};
+
 export const getRestaurantList = () => {
     return axios.get('http://localhost:3001/GetRestaurantList')
         .then((res) => {

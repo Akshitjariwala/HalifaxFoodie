@@ -14,10 +14,15 @@ const RestaurantHome = () => {
         userAnswer.answer = ""
     }
 
+    useEffect(() => {
+        setrestaurantEmail(location.email)
+    })
+
     const[userAnswer,setUserAnswer] = useState("")
     const[sequrity_question,setSequrity_question] = useState("")
     const[userAnswerError, setUserAnswerError] = useState("");
     const[userResponse,setUserResponse] = useState("");
+    const[restaurantEmail,setrestaurantEmail] = useState("");
 
     const inputEventLogin = (event) => {
         const value = event.target.value;
@@ -36,20 +41,6 @@ const RestaurantHome = () => {
 
     const handleMFA = (event) => {
         event.preventDefault()
-        setUserResponse(location.answer)
-        console.log(location.answer)
-        if(validate(userAnswer)) {
-            if(userResponse == userAnswer){
-                if(location.role == "user"){
-                    history.push("/UserHome");
-                } else {
-                    history.push("/RestaurantHome");
-                }
-                
-            } else {
-                window.alert("Answer Does Not Match. Please Provide Correct Answer")
-            }
-        }
     }
 
     const styles = {
@@ -77,8 +68,10 @@ const RestaurantHome = () => {
         </head>
         <body>
         <div class="homenav">
+            <Link to={{pathname:'/AddMenu',resEmail:restaurantEmail}}>Add Menu</Link>
+            <Link to='/WordCloud'>Word Cloud</Link>
             <Link to='/Chat'>Chat</Link>
-            <Link to='/RestaurantList'>Restaurant</Link>
+            <Link to='/RecipeSimilarity'>Recipe Similarity (ML)</Link>
         </div>
         
         <div style={{"margin-left":"250px"}}>

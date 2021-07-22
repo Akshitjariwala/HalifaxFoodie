@@ -119,7 +119,7 @@ const RegistrationForm = () => {
             console.log(res.status);
             if(res.status == 200){
                window.alert("User Successfully Registerred.")
-               
+               history.push("/Login");
             } else {
                 window.alert("User Registration Failed.")
             }

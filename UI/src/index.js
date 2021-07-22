@@ -13,6 +13,7 @@ import UserHome from './Component/UserHome'
 import ChatHome from './Component/Chat'
 import RestaurantList from './Component/RestaurantList'
 import RestaurantPage from './Component/RestaurantPage'
+import AddMenu from './Component/AddMenu'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -54,7 +55,8 @@ ReactDOM.render(
       <Route path="/UserHome" component={UserHome}></Route>
       <Route path="/ChatHome" component={ChatHome}></Route> 
       <Route path="/RestaurantList" component={RestaurantList}></Route>
-      <Route path="/RestaurantPage" component={RestaurantPage}></Route>
+      <Route path="/RestaurantPage" component={RestaurantPage}></Route> 
+      <Route path="/AddMenu" component={AddMenu}></Route>
     </body>
     </html>
     </BrowserRouter>

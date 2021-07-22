@@ -15,12 +15,14 @@ const MultiFactor = () => {
 
     useEffect(() => {
         setUserResponse(location.answer)
+        setEntityEmail(location.email)
     })
 
     const[userAnswer,setUserAnswer] = useState("")
     const[sequrity_question,setSequrity_question] = useState("")
     const[userAnswerError, setUserAnswerError] = useState("");
     const[userResponse,setUserResponse] = useState("");
+    const[entityEmail,setEntityEmail] = useState("");
 
     const inputEventLogin = (event) => {
         const value = event.target.value;
@@ -45,7 +47,7 @@ const MultiFactor = () => {
                 if(location.role == "user"){
                     history.push("/UserHome");
                 } else {
-                    history.push("/RestaurantHome");
+                    history.push({pathname:'/RestaurantHome',email:entityEmail});
                 }
                 
             } else {
