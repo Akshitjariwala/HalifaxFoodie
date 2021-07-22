@@ -8,6 +8,10 @@ import RestaurantRegistration from './Component/RestaurantRegistration'
 import Login from './Component/Login'
 import {BrowserRouter, Switch, Link, Route} from 'react-router-dom';
 import MultiFactor from './Component/MultiFactor'
+import RestaurantHome from './Component/RestaurantHome'
+import UserHome from './Component/UserHome'
+import ChatHome from './Component/Chat'
+import RestaurantList from './Component/RestaurantList'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -29,7 +33,7 @@ ReactDOM.render(
         <script src="https://sdk.amazonaws.com/js/aws-sdk-2.950.0.min.js"></script>
         </head>
         <body>
-        <nav class="navbar navbar-inverse">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
@@ -40,10 +44,15 @@ ReactDOM.render(
             </div>
         </div>
     </nav>
-    <Route path="/RegistrationForm" component={RegistrationForm}></Route>
-    <Route path="/RestaurantRegistration" component={RestaurantRegistration}></Route>
-    <Route path="/Login" component={Login}></Route>
-    <Route path="/MultiFactor" component={MultiFactor}></Route>
+    <br></br><br></br><br></br><br></br>
+      <Route path="/RegistrationForm" component={RegistrationForm}></Route>
+      <Route path="/RestaurantRegistration" component={RestaurantRegistration}></Route>
+      <Route path="/Login" component={Login}></Route>
+      <Route path="/MultiFactor" component={MultiFactor}></Route>
+      <Route path="/RestaurantHome" component={RestaurantHome}></Route> 
+      <Route path="/UserHome" component={UserHome}></Route>
+      <Route path="/ChatHome" component={ChatHome}></Route> 
+      <Route path="/RestaurantList" component={RestaurantList}></Route>
     </body>
     </html>
     </BrowserRouter>

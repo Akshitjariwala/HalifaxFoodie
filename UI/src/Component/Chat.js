@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import {BrowserRouter, Switch, Link, Route} from 'react-router-dom';
 
-const UserHome = () => {
+const ChatHome = () => {
     const history = useHistory();
     const location = useLocation();
 
@@ -15,6 +15,7 @@ const UserHome = () => {
     }
 
     const[userAnswer,setUserAnswer] = useState("")
+    const[sequrity_question,setSequrity_question] = useState("")
     const[userAnswerError, setUserAnswerError] = useState("");
     const[userResponse,setUserResponse] = useState("");
 
@@ -76,16 +77,16 @@ const UserHome = () => {
         </head>
         <body>
         <div class="homenav">
-            <Link to='/ChatHome'>Chat</Link>
+            <Link to='/Chat'>Chat</Link>
             <Link to='/RestaurantList'>Restaurant</Link>
         </div>
         
         <div style={{"margin-left":"250px"}}>
-            <h2>User Home</h2>
+            <h2>Chat List</h2>
         </div>
         </body>
     </html>
 );
 }
 
-export default UserHome;
+export default ChatHome;

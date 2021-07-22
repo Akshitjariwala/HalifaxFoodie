@@ -63,6 +63,28 @@ app.post("/Register", (req, res) => {
     res.status(200).send();
 });
 
+app.get("/GetRestaurantList", (req, res) => {
+
+  var temp = fetRestaurantList();
+
+  async function fetRestaurantList() {
+    var resList = []
+    var ref = firestore.collection('Restaurants');
+    var refList = await ref.get();
+    refList.forEach(doc => {
+        var restaurants = {}
+        restaurants["restaurantName"] = doc.data().restaurantName;
+        restaurants["restaurantEmail"] = doc.data().restaurantEmail;
+        restaurants["restaurantAddress"] = doc.data().restaurantAddress;
+        restaurants["contactNumber"] = doc.data().contactNumber;
+        restaurants["restaurantDescription"] = doc.data().restaurantDescription;
+        resList.push(restaurants);
+    });
+    res.status(200).send({restaurantList:resList})
+  }
+});
+
+
 app.post("/GetRole", (req, res) => {
     var userEmail = JSON.stringify(req.body)
     console.log(userEmail);
@@ -81,8 +103,6 @@ app.post("/GetRole", (req, res) => {
         });
         res.status(200).send({userRole:userRole});
     }
-    console.log(temp);
-    
   });
 
 app.post("/RegisterRestaurant", (req, res) => {
@@ -142,8 +162,6 @@ app.post("/Login", (req, res) => {
       res.status(400).send();
     }
 });
-
-
 
 app.listen(3001, () => {
   console.log("Login server is running on port 3001");

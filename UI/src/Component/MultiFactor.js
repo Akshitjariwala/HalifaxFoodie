@@ -39,7 +39,12 @@ const MultiFactor = () => {
         console.log(location.answer)
         if(validate(userAnswer)) {
             if(userResponse == userAnswer){
-                history.push("/Home");
+                if(location.role == "user"){
+                    history.push("/UserHome");
+                } else {
+                    history.push("/RestaurantHome");
+                }
+                
             } else {
                 window.alert("Answer Does Not Match. Please Provide Correct Answer")
             }

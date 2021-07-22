@@ -4,51 +4,37 @@ import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import {BrowserRouter, Switch, Link, Route} from 'react-router-dom';
-
-const UserHome = () => {
+import { getRestaurantList } from '../service';
+ 
+const RestaurantList = () => {
     const history = useHistory();
     const location = useLocation();
 
-    const initialState = () => {
-        setUserAnswerError("")
-        userAnswer.answer = ""
-    }
+    const[restaurantsList,setRestaurantsList] = useState("")
 
-    const[userAnswer,setUserAnswer] = useState("")
-    const[userAnswerError, setUserAnswerError] = useState("");
-    const[userResponse,setUserResponse] = useState("");
+    const [users, setUsers] = useState([
+        { id: 1, firstName: 'Frank', lastName: 'Murphy', email: 'frank.murphy@test.com', role: 'User' },
+        { id: 2, firstName: 'Vic', lastName: 'Reynolds', email: 'vic.reynolds@test.com', role: 'Admin' },
+        { id: 3, firstName: 'Gina', lastName: 'Jabowski', email: 'gina.jabowski@test.com', role: 'Admin' },
+        { id: 4, firstName: 'Jessi', lastName: 'Glaser', email: 'jessi.glaser@test.com', role: 'User' },
+        { id: 5, firstName: 'Jay', lastName: 'Bilzerian', email: 'jay.bilzerian@test.com', role: 'User' }
+    ]);
+    
 
-    const inputEventLogin = (event) => {
-        const value = event.target.value;
-        console.log(value)
-        setUserAnswer(value)
-    }
+    useEffect(() => {
+        var temp = fetchResto();
+        console.log(restaurantsList);
+    })
 
-    function validate(userAnswer){
-        let isValid = true;
-        if(userAnswer == ""){
-            setUserAnswerError("Please Provide Answer")
-            isValid = false;
-        }
-        return isValid;
+    //var restaurantsList;
+    async function fetchResto(){
+        let restaurantList = await getRestaurantList();
+        var list = restaurantList.data.restaurantList;
+        setRestaurantsList(list);
     }
 
     const handleMFA = (event) => {
         event.preventDefault()
-        setUserResponse(location.answer)
-        console.log(location.answer)
-        if(validate(userAnswer)) {
-            if(userResponse == userAnswer){
-                if(location.role == "user"){
-                    history.push("/UserHome");
-                } else {
-                    history.push("/RestaurantHome");
-                }
-                
-            } else {
-                window.alert("Answer Does Not Match. Please Provide Correct Answer")
-            }
-        }
     }
 
     const styles = {
@@ -81,11 +67,24 @@ const UserHome = () => {
         </div>
         
         <div style={{"margin-left":"250px"}}>
-            <h2>User Home</h2>
+            <h2>Restaurant List</h2>
+                    {restaurantsList && restaurantsList.map(user =>
+                        <div class="card">
+                        <div class="container">
+                            <br></br>
+                          <p>{user.restaurantName}</p> 
+                          <p>{user.restaurantDescription}</p> 
+                          <p>{user.restaurantAddress}</p> 
+                          <p>{user.contactNumber}</p> 
+                          <p>{user.restaurantEmail}</p> 
+                        </div>
+                        <br></br>
+                      </div>
+                    )}
         </div>
         </body>
     </html>
 );
 }
 
-export default UserHome;
+export default RestaurantList;

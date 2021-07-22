@@ -68,7 +68,7 @@ const Login = () => {
                     var responseFromLambda = response.data;
                     var securityQuestion = responseFromLambda.securityQuestion;
                     var answer = responseFromLambda.answer;
-                    history.push({pathname:'/MultiFactor',securityQuestion:securityQuestion,answer:answer});
+                    history.push({pathname:'/MultiFactor',securityQuestion:securityQuestion,answer:answer,role:userRole});
                 } else {
                     window.alert("Role Fetching Failed.");
                 }
