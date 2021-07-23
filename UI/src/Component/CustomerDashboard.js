@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { BrowserRouter, Switch, Link, Route } from 'react-router-dom';
 
-const ChatHome = () => {
+const UserHome = () => {
     const history = useHistory();
     const location = useLocation();
 
@@ -15,7 +15,6 @@ const ChatHome = () => {
     }
 
     const [userAnswer, setUserAnswer] = useState("")
-    const [sequrity_question, setSequrity_question] = useState("")
     const [userAnswerError, setUserAnswerError] = useState("");
     const [userResponse, setUserResponse] = useState("");
 
@@ -66,11 +65,10 @@ const ChatHome = () => {
             </div>
 
             <div style={{ "margin-left": "250px" }}>
-                <h2>Chat List</h2>
+                <h2>User Home</h2>
             </div>
-        </div >
-
+        </div>
     );
 }
 
-export default ChatHome;
+export default UserHome;

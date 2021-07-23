@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { BrowserRouter, Switch, Link, Route } from 'react-router-dom';
 
-const ChatHome = () => {
+const RestaurantHome = () => {
     const history = useHistory();
     const location = useLocation();
 
@@ -14,10 +14,15 @@ const ChatHome = () => {
         userAnswer.answer = ""
     }
 
+    useEffect(() => {
+        setrestaurantEmail(location.email)
+    })
+
     const [userAnswer, setUserAnswer] = useState("")
     const [sequrity_question, setSequrity_question] = useState("")
     const [userAnswerError, setUserAnswerError] = useState("");
     const [userResponse, setUserResponse] = useState("");
+    const [restaurantEmail, setrestaurantEmail] = useState("");
 
     const inputEventLogin = (event) => {
         const value = event.target.value;
@@ -36,20 +41,6 @@ const ChatHome = () => {
 
     const handleMFA = (event) => {
         event.preventDefault()
-        setUserResponse(location.answer)
-        console.log(location.answer)
-        if (validate(userAnswer)) {
-            if (userResponse == userAnswer) {
-                if (location.role == "user") {
-                    history.push("/customerHome");
-                } else {
-                    history.push("/restaurantHome");
-                }
-
-            } else {
-                window.alert("Answer Does Not Match. Please Provide Correct Answer")
-            }
-        }
     }
 
     const styles = {
@@ -61,16 +52,17 @@ const ChatHome = () => {
     return (
         <div class="tabBody">
             <div class="homenav">
+                <Link to={{ pathname: '/addMenu', resEmail: restaurantEmail }}>Add Menu</Link>
+                <Link to='/wordCloud'>Word Cloud</Link>
                 <Link to='/chatHome'>Chat</Link>
-                <Link to='/restaurantList'>Restaurant</Link>
+                <Link to='/recipeSimilarity'>Recipe Similarity (ML)</Link>
             </div>
 
             <div style={{ "margin-left": "250px" }}>
-                <h2>Chat List</h2>
+                <h2>Restaurant Home</h2>
             </div>
-        </div >
-
+        </div>
     );
 }
 
-export default ChatHome;
+export default RestaurantHome;
