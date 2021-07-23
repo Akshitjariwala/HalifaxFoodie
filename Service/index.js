@@ -66,7 +66,6 @@ app.post("/Register", (req, res) => {
 app.get("/GetRestaurantList", (req, res) => {
 
   var temp = fetRestaurantList();
-
   async function fetRestaurantList() {
     var resList = []
     var ref = firestore.collection('Restaurants');
@@ -82,6 +81,28 @@ app.get("/GetRestaurantList", (req, res) => {
     });
     res.status(200).send({restaurantList:resList})
   }
+});
+
+app.post("/GetMenuList", (req, res) => {
+  var restaurant = req.body; //req.body;
+  temp = fetchMenu(restaurant);
+  async function fetchMenu(restaurant) {
+    var menuList = []
+    const resRef = firestore.collection('RestaurantMenuItems');
+    const snapshot = await resRef.get();
+      snapshot.forEach(doc => 
+        {
+          var menuItems = {}
+          if(doc.data().restaurantName === restaurant){
+            menuItems["itemName"] = doc.data().itemName;
+            menuItems["itemDescription"] = doc.data().itemDescription;
+            menuItems["itemPrice"] = doc.data().itemPrice;
+            menuList.push(menuItems)
+          }
+        });
+        //console.log(menuList)
+        res.status(200).send({menuList:menuList});
+    }
 });
 
 
@@ -179,7 +200,6 @@ app.post("/Login", (req, res) => {
       res.status(400).send();
     }
 });
-
 
 app.post("/SaveMenuItem", (req, res) => {
     var menuItem = req.body;

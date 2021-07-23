@@ -3,24 +3,26 @@ import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import {BrowserRouter, Switch, Link, Route} from 'react-router-dom';
-import { getRestaurantList } from '../service';
+import { getMenuList } from '../service';
  
 const RestaurantPage = () => {
     const history = useHistory();
     const location = useLocation();
 
-    const[restaurantsList,setRestaurantsList] = useState("")
+    const[menuList,setMenuList] = useState("")
+    const[restaurenEmail,setRestaurantEmail] = useState("")
 
     useEffect(() => {
-        //var temp = fetchResto();
-        console.log(restaurantsList);
+        setRestaurantEmail(location.email);
+        console.log(location.data);
+        var temp = fetchMenu("ownerkfc@gmail.com");
     })
 
-    //var restaurantsList;
-    async function fetchResto(){
-        let restaurantList = await getRestaurantList();
-        var list = restaurantList.data.restaurantList;
-        setRestaurantsList(list);
+    //var Menu List;
+    async function fetchMenu(restaurantName){
+        let menlist = await getMenuList(restaurantName);
+        var list = menlist.data.menuList;
+        setMenuList(list);
     }
 
      const handleRestaurentClick = (event,data) => {
@@ -61,16 +63,14 @@ const RestaurantPage = () => {
         </div>
         
         <div style={{"margin-left":"250px"}}>
-            <h2>Restaurant List</h2>
-                    {restaurantsList && restaurantsList.map(user =>
+            <h2>{location.restaurantName}</h2>
+                    {menuList && menuList.map(item =>
                         <div class="card">
                         <div class="container">
                             <br></br>
-                          <p><Link onClick={((e) => handleRestaurentClick(e, user.restaurantEmail))}>{user.restaurantName}</Link></p> 
-                          <p>{user.restaurantDescription}</p> 
-                          <p>{user.restaurantAddress}</p> 
-                          <p>{user.contactNumber}</p> 
-                          <p>{user.restaurantEmail}</p> 
+                          <p><Link onClick={((e) => handleRestaurentClick(e, item.restaurantEmail))}>{item.itemName}</Link></p> 
+                          <p>{item.itemDescription}</p> 
+                          <p>{item.itemPrice}</p> 
                         </div>
                         <br></br>
                       </div>

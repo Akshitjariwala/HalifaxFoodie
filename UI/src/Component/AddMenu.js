@@ -20,7 +20,7 @@ const AddMenu = () => {
         itemDescription:"",
         itemRecipe:"",
         itemPrice:"",
-        restaurantName:""
+        restaurantName:location.resEmail
     });
 
     const initialState = () => {
@@ -31,7 +31,7 @@ const AddMenu = () => {
         menuDish.itemName = ""
         menuDish.itemDescription = ""
         menuDish.itemRecipe = ""
-        menuDish.restaurantName = "ownerkfc@gmail.com"
+        menuDish.restaurantName = ""
     }
 
     const inputEventMenuRegistration = (event) => {
@@ -44,7 +44,6 @@ const AddMenu = () => {
     function validate(menuDish){
 
         let isValid  = true;
-
         if(menuDish.itemName === ""){
             setuserItemNameError("Please Enter Menu Item Name")
             isValid = false;
@@ -64,15 +63,13 @@ const AddMenu = () => {
             setitemPriceError("Please Enter Menu Item Price")
             isValid = false;
         }
-
         return isValid;
     }
 
     const handleRegister = async (event) => {
         event.preventDefault()
-        setmenuDish({...menuDish, restaurantName:location.resEmail})
-        console.log(menuDish.restaurantName)
         if(validate(menuDish)) {
+            console.log(menuDish);
             let res = await saveMenuItem(menuDish)
             console.log(res.status);
             if(res.status == 200){

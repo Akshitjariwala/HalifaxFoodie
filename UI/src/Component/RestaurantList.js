@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import {BrowserRouter, Switch, Link, Route} from 'react-router-dom';
+import { BrowserRouter, Switch, Link, Route } from 'react-router-dom';
 import { getRestaurantList } from '../service';
  
 const RestaurantList = () => {
@@ -18,15 +18,14 @@ const RestaurantList = () => {
     })
 
     //var restaurantsList;
-    async function fetchResto(){
+    async function fetchResto() {
         let restaurantList = await getRestaurantList();
         var list = restaurantList.data.restaurantList;
         setRestaurantsList(list);
     }
 
      const handleRestaurentClick = (event,data) => {
-        history.push({pathname:'/RestaurantPage',restaurantEmail:data});
-        alert(data);
+         history.push({pathname:'/RestaurantPage',data:data});
     }
 
     const handleMFA = (event) => {
@@ -61,23 +60,23 @@ const RestaurantList = () => {
             <Link to='/ChatHome'>Chat</Link>
             <Link to='/RestaurantList'>Restaurant</Link>
         </div>
-        
+
         <div style={{"margin-left":"250px"}}>
             <h2>Restaurant List</h2>
-                    {restaurantsList && restaurantsList.map(user =>
+                    {restaurantsList && restaurantsList.map(restaurant =>
                         <div class="card">
                         <div class="container">
-                            <br></br>
-                          <p><Link onClick={((e) => handleRestaurentClick(e, user.restaurantEmail))}>{user.restaurantName}</Link></p> 
-                          <p>{user.restaurantDescription}</p> 
-                          <p>{user.restaurantAddress}</p> 
-                          <p>{user.contactNumber}</p> 
-                          <p>{user.restaurantEmail}</p> 
+                          <br></br>
+                          <p><Link onClick={((e) => handleRestaurentClick(e, restaurant.restaurantEmail))}>{restaurant.restaurantName}</Link></p> 
+                          <p>{restaurant.restaurantDescription}</p> 
+                          <p>{restaurant.restaurantAddress}</p> 
+                          <p>{restaurant.contactNumber}</p> 
+                          <p>{restaurant.restaurantEmail}</p> 
                         </div>
                         <br></br>
                       </div>
                     )}
-        </div>
+            </div>
         </body>
     </html>
 );

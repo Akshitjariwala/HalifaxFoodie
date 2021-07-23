@@ -41,6 +41,14 @@ export const saveMenuItem = (payload) => {
         .catch(err => { return err.response })
 };
 
+export const getMenuList = (payload) => {
+    return axios.post('http://localhost:3001/GetMenuList', payload)
+        .then((res) => {
+            return res;
+        })
+        .catch(err => { return err.response })
+};
+
 export const getRestaurantList = () => {
     return axios.get('http://localhost:3001/GetRestaurantList')
         .then((res) => {
@@ -48,5 +56,6 @@ export const getRestaurantList = () => {
         })
         .catch(err => { return err.response })
 };
+
 
 
