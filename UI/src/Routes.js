@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Link, Route } from 'react-router-dom';
-import { CustomerRegistration, RestaurantRegistration, Login, MultiFactor, RestaurantDashboard, RestaurantPage, AddMenu, RestaurantOrders, CustomerDashboard, RestaurantList, ChatHome, } from './Component'
+import { CustomerRegistration, RestaurantRegistration,RestaurantChat, Login, MultiFactor, RestaurantDashboard, RestaurantPage, AddMenu, RestaurantOrders, CustomerDashboard, RestaurantList, ChatHome } from './Component'
 
 const Routes = () => {
     return (
@@ -27,6 +27,7 @@ const Routes = () => {
             <Route path="/restaurantPage" component={RestaurantPage}></Route>
             <Route path="/addMenu" component={AddMenu}></Route>
             <Route path="/restaurantOrders" component={RestaurantOrders}></Route>
+            <Route path="/restaurantChat" component={RestaurantChat}></Route>
         </BrowserRouter>
     )
 }

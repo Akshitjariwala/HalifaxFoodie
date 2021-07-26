@@ -63,6 +63,8 @@ const MultiFactor = () => {
     const dropDownStyle = { width: "945px" };
 
     return (
+        <div style={{"margin-left":120}}>
+        <div class="homenav"></div>
         <div class=" tabBody">
             <form class="form-horizontal" onSubmit={handleMFA}>
                 <div class="form-group" >
@@ -90,12 +92,13 @@ const MultiFactor = () => {
                 <br></br>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" style={{ "margin-left": "330px" }} class="btn btn-default">Multifactor Authentication</button>
+                        <button type="submit" style={{ "margin-left": "350px" }} class="btn btn-default">Multifactor Authentication</button>
                     </div>
                 </div>
                 <div>
                 </div>
             </form>
+        </div>
         </div>
     );
 }
