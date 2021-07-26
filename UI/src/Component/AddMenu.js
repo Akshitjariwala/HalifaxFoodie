@@ -1,7 +1,6 @@
 import React , {useState, Link, useEffect} from 'react'
 import { saveMenuItem } from '../service';
 import { useHistory } from "react-router-dom";
-import Login from './Login'
 import { useLocation } from "react-router-dom";
 
 
@@ -74,7 +73,7 @@ const AddMenu = () => {
             console.log(res.status);
             if(res.status == 200){
                window.alert("Menu Item Successfully Added.")
-               history.push("/RestaurantHome");
+               history.push("/restaurantHome");
             } else {
                 window.alert("Menu Item Registration Failed.")
             }
