@@ -16,6 +16,10 @@ code {
     monospace;
 }
 
+div.col-sm-9 div {
+  font-size: 14px;
+}
+
 .register {
   display: flex;
   flex-direction: column;
@@ -77,6 +81,16 @@ button.main {
 
 .homenav a:hover {
   color: #f1f1f1;
+}
+
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+.time-left {
+  float: left;
+  color: #999;
 }
 
 .main {

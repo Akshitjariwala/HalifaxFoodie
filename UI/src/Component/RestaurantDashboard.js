@@ -54,7 +54,7 @@ const RestaurantHome = () => {
             <div class="homenav">
                 <Link to={{ pathname: '/addMenu', resEmail: restaurantEmail }}>Add Menu</Link>
                 <Link to='/wordCloud'>Word Cloud</Link>
-                <Link to='/chatHome'>Chat</Link>
+                <Link to='/restaurantChat'>Restaurant Chat</Link>
                 <Link to='/recipeSimilarity'>Recipe Similarity (ML)</Link>
             </div>
 

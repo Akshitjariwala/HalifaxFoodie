@@ -6,11 +6,10 @@ const functions = require("firebase-functions");
 var AWS = require('aws-sdk/dist/aws-sdk-react-native');
 AWS.config.update({region:'us-east-1',accessKeyId: 'ASIAVJDCQO5A3AIOXJKO', secretAccessKey: 'Vv4KaqEmjbHiL1G5gHWRqFcwO9Yg0VCiHJ2VndjY',
 sessionToken:'FwoGZXIvYXdzEMb//////////wEaDPspd1NrhVA/lmqG+SK/AXBQpa9gM5SuZ+jkJenjrwjBjBJE20TxC3v8EDxZpTL3ybtLveu35K/GsMyicH5Zi9pUFbqsOS9vXoQ4FrQ8x3Xu68YLuKs9Up51wbx9AtwfDB5W0LP/P8fFrcbLkSSR1O+DC82N0anOqr4egp64gi81KnXQuaslziXbnxuh17IDOoBHbBGneZDOMd/l4pv9tAKdJoUqW6PGcEchDJZZKXH6qZJUo6Afe67aktqv77lXCpsF0TSYp4GqDB+6mzspKMHp3IcGMi0mFW6stSSK8YyOkrHVJSooomHeO9xctQ4GhQNl+RAOa0baESHi41IkwYLBeyU='});
-var lambda = new AWS.Lambda({apiVersion: '2015-03-31'});
-var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-var apigClientFactory = require('aws-api-gateway-client').default;
 config = {invokeUrl:'https://7qk3g6xwoc.execute-api.us-east-1.amazonaws.com/default/securityQuestion'}
 var axios = require('axios');
+const {PubSub} = require('@google-cloud/pubsub');
+const pubSubClient = new PubSub();
 
 // To access firebase database.
 var firebaseConfig = {
@@ -64,7 +63,6 @@ app.post("/Register", (req, res) => {
 });
 
 app.get("/GetRestaurantList", (req, res) => {
-
   var temp = fetRestaurantList();
   async function fetRestaurantList() {
     var resList = []
@@ -104,7 +102,6 @@ app.post("/GetMenuList", (req, res) => {
         res.status(200).send({menuList:menuList});
     }
 });
-
 
 app.post("/FetchRole", (req, res) => {
     var userEmail = req.body.userEmail
@@ -213,6 +210,90 @@ app.post("/SaveMenuItem", (req, res) => {
              window.alert("Error Message : "+error.message);
              res.status(400).send();
          })
+});
+
+// For User
+app.post("/PublishChatMessage", (req, res) => {
+    console.log("In Publish User Chat.")
+    const data = req.body.message;
+    const messageBody = data.toString();
+    const message = Buffer.from(data);
+    const topicName = 'InstantMessaging';
+     pubSubClient.topic(topicName).publish(message).then((messageId) => {
+            console.log('Message ',{messageId}, 'Sent Successfully');
+            res.status(200).send();
+        }).catch((err) => {
+         console.error('ERROR:', err);
+       });
+});
+
+// For Restaurant
+app.post("/PublishChatMessageRestaurant", (req, res) => {
+  console.log("In Publish Restaurant Chat.")
+  const data = req.body.message;
+  const messageBody = data.toString();
+  const message = Buffer.from(data);
+  const topicName = 'InstantMessagingRestaurant';
+  pubSubClient.topic(topicName).publish(message).then((messageId) => {
+          console.log('Message ',{messageId}, 'Sent Successfully');
+          res.status(200).send();
+      }).catch((err) => {
+       console.error('ERROR:', err);
+     });
+});
+
+app.get("/GetChatMessage", (req, res) => {
+  console.log("In Get User Chat.")
+  fetchMessages();
+  async function fetchMessages(){
+    var messageList = []
+    const subscriptionName = "InstantMessagingSub-Restaurant";
+    var count = 0;
+    var messageName;
+    const messageHandler = message => {
+      count += 1;
+      messageName = 'message_'+count
+      messageList.push(message.data.toString());
+    };
+    const subscription = pubSubClient.subscription(subscriptionName);
+
+    subscription.on('message', messageHandler);
+
+    setTimeout(() => {
+      subscription.removeListener('message', messageHandler);
+      console.log(`${count} message(s) received.`);
+      console.log(messageList);
+      res.status(200).send({messages:messageList});
+    }, 1 * 1000);
+  }
+});
+
+app.get("/GetChatMessageRestaurant", (req, res) => {
+  console.log("In Get Restaurant Chat.")
+  fetchRestaurantMessages();
+  async function fetchRestaurantMessages(){
+    var messageList = []
+    const subscriptionName = "InstantMessagingSub-User";
+    var count = 0;
+    var messageName;
+    const messageHandler = message => {
+      count += 1;
+      messageName = 'message_'+count
+      messageList.push(message.data.toString());
+      message = message.data.toString();
+    };
+
+    const subscription = pubSubClient.subscription(subscriptionName);
+
+    subscription.on('message', messageHandler);
+
+    setTimeout(() => {
+      subscription.removeListener('message', messageHandler);
+      console.log(`${count} message(s) received.`);
+      console.log(messageList);
+      res.status(200).send({messages:messageList});
+    }, 1 * 1000);
+  }
 });
 
 app.listen(3001, () => {
