@@ -3,7 +3,8 @@ import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { BrowserRouter, Switch, Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { logoutUser } from '../service';
 
 const RestaurantHome = () => {
     const history = useHistory();
@@ -39,6 +40,16 @@ const RestaurantHome = () => {
         return isValid;
     }
 
+    const logOutEvent = async (event) => {
+        let response = await logoutUser()
+        console.log(response.status);
+        if(response.status == 200){
+            history.push("/login");
+        } else {
+            window.alert("Sign Out Failed!!")
+        }
+    }
+
     const handleMFA = (event) => {
         event.preventDefault()
     }
@@ -50,6 +61,16 @@ const RestaurantHome = () => {
     const dropDownStyle = { width: "945px" };
 
     return (
+        <div>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                        <li style={{"position":" absolute","right":50}}><button class="btn default cus" onClick={logOutEvent} style={{}}>Logout</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
         <div class="tabBody">
             <div class="homenav">
                 <Link to={{ pathname: '/addMenu', resEmail: restaurantEmail }}>Add Menu</Link>
@@ -61,6 +82,7 @@ const RestaurantHome = () => {
             <div style={{ "margin-left": "250px" }}>
                 <h2>Restaurant Home</h2>
             </div>
+        </div>
         </div>
     );
 }

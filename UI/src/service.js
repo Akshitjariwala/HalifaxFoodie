@@ -24,7 +24,6 @@ export const registerRestaurant = (restaurantRegistration) => {
         .catch(err => { return err.response})
 };
 
-
 export const loginUser = (payload) => {
     return axios.post('http://localhost:3001/Login', payload)
         .then((res) => {
@@ -83,6 +82,15 @@ export const pushChatMessageRestaurant = (payload) => {
 
 export const fetchChatMessageRestaurant = () => {
     return axios.get('http://localhost:3001/GetChatMessageRestaurant')
+        .then((res) => {
+            console.log(res)
+            return res;
+        })
+        .catch(err => { return err.response })
+};
+
+export const logoutUser = () => {
+    return axios.post('http://localhost:3001/Logout')
         .then((res) => {
             console.log(res)
             return res;

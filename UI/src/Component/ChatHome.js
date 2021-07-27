@@ -3,8 +3,10 @@ import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { BrowserRouter, Switch, Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { pushChatMessage, fetchChatMessage,fetchChatMessageRestaurant } from '../service';
+import { logoutUser } from '../service';
+
 
 const ChatHome = () => {
     const history = useHistory();
@@ -65,11 +67,31 @@ const ChatHome = () => {
         }
     }
 
+    const logOutEvent = async (event) => {
+        let response = await logoutUser()
+        console.log(response.status);
+        if(response.status == 200){
+            history.push("/login");
+        } else {
+            window.alert("Sign Out Failed!!")
+        }
+    }
+
     const styles = {
         color: "white"
     };
     
     return (
+        <div>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                    <li style={{"position":" absolute","right":50}}><button onClick={logOutEvent} class="btn default cus" style={{}}>Logout</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
         <div class="container">
             <h5>User Chat</h5>
         <div class="row" style={{"height":400,"overflow-y":"scroll","margin-top":80,"margin-left":220,"border-style":"groove"}}>
@@ -99,6 +121,7 @@ const ChatHome = () => {
                                 />
         </span>
         <span><button type="submit" class="btn btn-default" onClick={sendChat}>Send</button></span>
+    </div>
     </div>
     );
 }

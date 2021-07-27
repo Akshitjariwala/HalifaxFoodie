@@ -296,6 +296,22 @@ app.get("/GetChatMessageRestaurant", (req, res) => {
   }
 });
 
+app.post("/Logout", (req, res) => {
+  console.log("In Log out")
+  firebase.auth().signOut().then((err) => {
+    if(err){
+      console.log(err)
+    } else {
+      res.status(200).send();
+    }
+    }).catch(function(error){
+       console.log(error.code);  
+       console.log(error.message);
+       window.alert("Error Message : "+error.message);
+       res.status(400).send();
+   })
+});
+
 app.listen(3001, () => {
   console.log("Login server is running on port 3001");
 });
