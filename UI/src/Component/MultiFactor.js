@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const MultiFactor = () => {
     const history = useHistory();
@@ -63,6 +63,18 @@ const MultiFactor = () => {
     const dropDownStyle = { width: "945px" };
 
     return (
+        <div>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                            <li><Link to='/login'>Login</Link></li>
+                            <li><Link to='/customerRegistration'>Register as User</Link></li>
+                            <li><Link to='/restaurantRegistration'>Register as Restaurant</Link></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
         <div style={{"margin-left":120}}>
         <div class="homenav"></div>
         <div class=" tabBody">
@@ -98,6 +110,7 @@ const MultiFactor = () => {
                 <div>
                 </div>
             </form>
+        </div>
         </div>
         </div>
     );

@@ -3,8 +3,10 @@ import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { BrowserRouter, Switch, Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { pushChatMessageRestaurant, fetchChatMessageRestaurant,fetchChatMessage } from '../service';
+import { logoutUser } from '../service';
+
 
 const RestaurantChat = () => {
     const history = useHistory();
@@ -64,14 +66,36 @@ const RestaurantChat = () => {
         }
     }
 
+    const logOutEvent = async (event) => {
+        let response = await logoutUser()
+        console.log(response.status);
+        if(response.status == 200){
+            history.push("/login");
+        } else {
+            window.alert("Sign Out Failed!!")
+        }
+    }
+
     const styles = {
         color: "white"
     };
     
     return (
+        <div>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                        <li style={{"position":" absolute","right":50}}><button class="btn default cus" onClick={logOutEvent} style={{}}>Logout</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
     <div class="container">
     <div class="row" style={{"height":400,"overflow-y":"scroll","margin-top":80,"margin-left":220,"border-style":"groove"}}>
-    <div class="homenav"></div>
+    <div class="homenav">
+    <Link to='/restaurantChat'>Restaurant Chat</Link>
+    </div>
     <div class="col-sm-9">
           <div id="section1" >
           {
@@ -98,6 +122,7 @@ const RestaurantChat = () => {
                             />
                             </span>
     <span><button type="submit" class="btn btn-default" onClick={sendChat}>Send</button></span>
+</div>
 </div>
 );
 }

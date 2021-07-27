@@ -3,7 +3,6 @@ import axios from 'axios';
 import { registerUser } from '../service';
 import firebase from 'firebase';
 import { useHistory } from "react-router-dom";
-import Login from './Login'
 
 
 
@@ -133,6 +132,18 @@ const RegistrationForm = () => {
 
     const dropDownStyle = { width: "945px" };
     return (
+        <div>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                            <li><Link to='/login'>Login</Link></li>
+                            <li><Link to='/customerRegistration'>Register as User</Link></li>
+                            <li><Link to='/restaurantRegistration'>Register as Restaurant</Link></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
         <div class="container tabBody">
             <form class="form-horizontal" onSubmit={HandleRegister}>
                 <div class="form-group">
@@ -241,6 +252,7 @@ const RegistrationForm = () => {
                     </div>
                 </div>
             </form>
+        </div>
         </div>
     );
 }

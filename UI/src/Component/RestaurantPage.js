@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { BrowserRouter, Switch, Link, Route } from 'react-router-dom';
 import { getMenuList } from '../service';
+import { logoutUser } from '../service';
 
 const RestaurantPage = () => {
     const history = useHistory();
@@ -29,6 +30,16 @@ const RestaurantPage = () => {
         alert(data);
     }
 
+    const logOutEvent = async (event) => {
+        let response = await logoutUser()
+        console.log(response.status);
+        if(response.status == 200){
+            history.push("/login");
+        } else {
+            window.alert("Sign Out Failed!!")
+        }
+    }
+
     const handleMFA = (event) => {
         event.preventDefault()
     }
@@ -40,6 +51,18 @@ const RestaurantPage = () => {
     const dropDownStyle = { width: "945px" };
 
     return (
+        <div>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                            <li><Link to='/login'>Login</Link></li>
+                            <li><Link to='/customerRegistration'>Register as User</Link></li>
+                            <li><Link to='/restaurantRegistration'>Register as Restaurant</Link></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
         <div class="tabBody">
             <div class="homenav">
                 <Link to='/chatHome'>Chat</Link>
@@ -60,6 +83,7 @@ const RestaurantPage = () => {
                     </div>
                 )}
             </div>
+        </div>
         </div>
     );
 }

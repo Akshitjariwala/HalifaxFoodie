@@ -3,6 +3,7 @@ import { loginUser } from '../service';
 import { useHistory } from "react-router-dom";
 import { getRole } from '../service';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
     const history = useHistory();
@@ -87,6 +88,18 @@ const Login = () => {
 
     const dropDownStyle = { width: "945px" };
     return (
+        <div>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                            <li><Link to='/login'>Login</Link></li>
+                            <li><Link to='/customerRegistration'>Register as User</Link></li>
+                            <li><Link to='/restaurantRegistration'>Register as Restaurant</Link></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
         <div class="container tabBody">
             <form class="form-horizontal" onSubmit={handleLogin}>
                 <div class="form-group">
@@ -125,6 +138,7 @@ const Login = () => {
                 </div>
             </form>
         </div>
+    </div>
     );
 }
 export default Login;

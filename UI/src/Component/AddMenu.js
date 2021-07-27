@@ -2,8 +2,7 @@ import React , {useState, Link, useEffect} from 'react'
 import { saveMenuItem } from '../service';
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-
-
+import { logoutUser } from '../service';
 
 const AddMenu = () => {
     const history = useHistory();
@@ -41,7 +40,6 @@ const AddMenu = () => {
     }
 
     function validate(menuDish){
-
         let isValid  = true;
         if(menuDish.itemName === ""){
             setuserItemNameError("Please Enter Menu Item Name")
@@ -80,13 +78,36 @@ const AddMenu = () => {
         }
     }
 
+    const logOutEvent = async (event) => {
+        let response = await logoutUser()
+        console.log(response.status);
+        if(response.status == 200){
+            history.push("/login");
+        } else {
+            window.alert("Sign Out Failed!!")
+        }
+    }
+
     const styles = {
         color: "white"
     };
 
     const dropDownStyle = {width:"945px"};
         return (
-            <div class="container">
+        <div>
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li style={{"position":" absolute","right":50}}><button class="btn default cus" onClick={logOutEvent} style={{}}>Logout</button></li>
+                </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="homenav">
+                <lable class="leble" style={{"margin-left":40}}>Add Menu</lable>
+            </div>
+            <div class="container" style={{"margin-top":80,"margin-left":180}}>
             <form class="form-horizontal" onSubmit={handleRegister}>
                 <div class="form-group">
                 <label class="control-label col-sm-2" for="itemName">Menu Item Name :</label>
@@ -145,10 +166,11 @@ const AddMenu = () => {
              </div>
                     <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                         <button type="submit" class="btn btn-default">Register</button>
+                         <button type="submit" class="btn btn-default">Add Menu Item</button>
                     </div>
                     </div>
                 </form>
+            </div>
             </div>
           );
     }
