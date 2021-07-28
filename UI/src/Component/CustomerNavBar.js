@@ -22,6 +22,7 @@ const CustomerNavBar = () => {
             <Link to='/chatHome'>Chat</Link>
             <Link to='/restaurantList'>Restaurants</Link>
             <Link to='/orders'>Orders</Link>
+            <button><a href = 'https://www.google.com/webhp?authuser=1'>Feedback</a></button>
             <Link  onClick={logOutEvent}>Logout</Link>
         </div>
     );
