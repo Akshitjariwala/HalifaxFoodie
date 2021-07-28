@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from 'react-router-dom';
-import { pushChatMessage, fetchChatMessage, fetchChatMessageRestaurant } from '../service';
+import { pushChatMessage, fetchChatMessage, fetchChatMessageRestaurant, pushChatMessageRestaurant } from '../service';
 import { logoutUser } from '../service';
 import RestaurantNavBar from './RestaurantNavBar';
 import CustomerNavBar from './CustomerNavBar';
@@ -17,10 +17,11 @@ const ChatHome = () => {
     useEffect(async () => {
         const interval = setInterval( async () =>{ 
             let reply = await fetchChatMessageRestaurant();
-            var mes = reply.data.messages;
-            setUserChatList(reply.data.messages);
-            console.log(reply.data.messages)
-        }, 10000);
+            if(reply.status == 200){
+                var msg = reply.data.messages;
+                setUserChatList((userChatList) => [...userChatList,msg]);
+            }
+        }, 10*1000);
     },[])
 
     const [userChat, setuserChat] = useState({
@@ -48,14 +49,12 @@ const ChatHome = () => {
     const sendChat = async (event) => {
         event.preventDefault()
         console.log("Chat Sent : " + userChat.message);
+        let res;
         if (validate(userChat)) {
-            let res = await pushChatMessage(userChat);
+            res = await pushChatMessage(userChat);
             console.log(res.status);
             if (res.status == 200) {
-                let reply = await fetchChatMessage();
-                if (reply.status == 200) {
-                    console.log(reply.data.messages);
-                }
+                //
             }
         } else {
             console.log("Chat message Empty.");
@@ -86,10 +85,7 @@ const ChatHome = () => {
                         <div id="section1" >
                         {userChatList && userChatList.map(chat =>
                                 <div>
-                                    <div class="container">
-                                        <p>{chat}</p>
-                                    </div>
-                                    <br></br>
+                                    <p>Restaurant : {chat}</p>
                                 </div>
                             )}
                         </div>

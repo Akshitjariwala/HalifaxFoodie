@@ -296,89 +296,99 @@ app.post("/getSimilarity", (req, res) => {
     });
   });
 
-// For User
-app.post("/PublishChatMessage", (req, res) => {
-  console.log("In Publish User Chat.")
-  const data = req.body.message;
-  const messageBody = data.toString();
-  const message = Buffer.from(data);
-  const topicName = 'InstantMessaging';
-  pubSubClient.topic(topicName).publish(message).then((messageId) => {
-    console.log('Message ', { messageId }, 'Sent Successfully');
-    res.status(200).send();
-  }).catch((err) => {
-    console.error('ERROR:', err);
+  app.post("/PublishChatMessage", (req, res) => {
+    console.log("In Publish User Chat.")
+    const data = req.body.message;
+    const messageBody = data.toString();
+    const message = Buffer.from(data);
+    const topicName = 'InstantMessaging';
+    pubSubClient.topic(topicName).publish(message).then((messageId) => {
+      console.log('Message ', { messageId }, 'Sent Successfully');
+      res.status(200).send();
+    }).catch((err) => {
+      console.error('ERROR:', err);
+    });
   });
-});
-
-// For Restaurant
-app.post("/PublishChatMessageRestaurant", (req, res) => {
-  console.log("In Publish Restaurant Chat.")
-  const data = req.body.message;
-  const messageBody = data.toString();
-  const message = Buffer.from(data);
-  const topicName = 'InstantMessagingRestaurant';
-  pubSubClient.topic(topicName).publish(message).then((messageId) => {
-    console.log('Message ', { messageId }, 'Sent Successfully');
-    res.status(200).send();
-  }).catch((err) => {
-    console.error('ERROR:', err);
+  
+  // For Restaurant
+  app.post("/PublishChatMessageRestaurant", (req, res) => {
+    console.log("In Publish Restaurant Chat.")
+    const data = req.body.message;
+    const messageBody = data.toString();
+    const message = Buffer.from(data);
+    const topicName = 'InstantMessagingRestaurant';
+    pubSubClient.topic(topicName).publish(message).then((messageId) => {
+      console.log('Message ', { messageId }, 'Sent Successfully');
+      res.status(200).send();
+    }).catch((err) => {
+      console.error('ERROR:', err); 
+    });
   });
-});
-
-app.get("/GetChatMessage", (req, res) => {
-  console.log("In Get User Chat.")
-  fetchMessages();
-  async function fetchMessages(){
-    var messageList = []
-    const subscriptionName = "InstantMessagingSub-Restaurant";
-    var count = 0;
-    var messageName;
-    const messageHandler = message => {
-      count += 1;
-      messageName = 'message_'+count
-      messageList.push(message.data.toString());
-    };
-    const subscription = pubSubClient.subscription(subscriptionName);
-
-    subscription.on('message', messageHandler);
-
-    setTimeout(() => {
-      subscription.removeListener('message', messageHandler);
-      console.log(`${count} message(s) received.`);
-      console.log(messageList);
-      res.status(200).send({messages:messageList});
-    }, 60 * 1000);
-  }
-});
-
-app.get("/GetChatMessageRestaurant", (req, res) => {
-  console.log("In Get Restaurant Chat.")
-  fetchRestaurantMessages();
-  async function fetchRestaurantMessages(){
-    var messageList = []
-    const subscriptionName = "InstantMessagingSub-User";
-    var count = 0;
-    var messageName;
-    const messageHandler = message => {
-      count += 1;
-      messageName = 'message_'+count
-      messageList.push(message.data.toString());
-      message = message.data.toString();
-    };
-
-    const subscription = pubSubClient.subscription(subscriptionName);
-
-    subscription.on('message', messageHandler);
-
-    setTimeout(() => {
-      subscription.removeListener('message', messageHandler);
-      console.log(`${count} message(s) received.`);
-      console.log(messageList);
-      res.status(200).send({messages:messageList});
-    }, 60 * 1000);
-  }
-});
+  
+  app.get("/GetChatMessage", (req, res) => {
+    console.log("In Get User Chat.")
+    fetchMessages();
+    async function fetchMessages(){
+      var messageList = []
+      const subscriptionName = "InstantMessagingSub-Restaurant";
+      var count = 0;
+      var messageName;
+      const messageHandler = message => {
+        count += 1;
+        messageName = 'message_'+count
+        messageList.push(message.data.toString());
+        message.ack();
+      };
+      const subscription = pubSubClient.subscription(subscriptionName);
+  
+      subscription.on('message', messageHandler);
+      
+      setTimeout(() => {
+        subscription.removeListener('message', messageHandler);
+        if(messageList.length<=0){
+          res.status(400).send();
+        } else {
+          console.log(`${count} message(s) received.`);
+          console.log(messageList);
+          res.status(200).send({messages:messageList});
+        }
+      }, 10 * 1000);
+    }
+  });
+  
+  app.get("/GetChatMessageRestaurant", (req, res) => {
+    console.log("In Get Restaurant Chat.")
+    fetchRestaurantMessages();
+    async function fetchRestaurantMessages(){
+      var messageList = []
+      const subscriptionName = "InstantMessagingSub-User";
+      var count = 0;
+      var messageName;
+      const messageHandler = message => {
+        count += 1;
+        messageName = 'message_'+count
+        messageList.push(message.data.toString());
+        message.ack();
+      };
+  
+      const subscription = pubSubClient.subscription(subscriptionName);
+  
+      subscription.on('message', messageHandler);
+  
+      setTimeout(() => {
+        subscription.removeListener('message', messageHandler);
+        if(messageList.length <= 0){
+          res.status(400).send();
+        } else {
+          console.log(`${count} message(s) received.`);
+          console.log(messageList);
+          res.status(200).send({messages:messageList});
+        }
+        
+        }, 10 * 1000);
+    }
+  });
+  
 
 app.post("/Logout", (req, res) => {
   console.log("In Log out")

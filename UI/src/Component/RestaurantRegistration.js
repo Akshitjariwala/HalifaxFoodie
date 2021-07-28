@@ -148,7 +148,7 @@ const RestaurantRegistration = () => {
             console.log(res.status);
             if (res.status === 200) {
                 window.alert("User Successfully Registerred.")
-                history.push("/login");
+                //history.push("/login");
             } else {
                 window.alert("User Registration Failed.")
             }

@@ -22,9 +22,11 @@ const RestaurantChat = () => {
     useEffect( async () => {
         const interval = setInterval( async () =>{ 
             let reply = await fetchChatMessage();
-            console.log(reply.data.messages)
-            setRestaurantChatList(reply.data.messages);
-        }, 10000);
+            if(reply.status == 200){
+                var msg = reply.data.messages;
+                setRestaurantChatList((RestaurantChatList) => [...RestaurantChatList,msg]);
+            }
+        }, 10* 1000);
     },[])
 
     const inputEventChat = (event) => {
@@ -50,12 +52,7 @@ const RestaurantChat = () => {
             let res = await pushChatMessageRestaurant(RestaurantChat);
             console.log(res.status);
             if (res.status == 200) {
-                // redirect to user chat page.
-                let reply = await fetchChatMessageRestaurant();
-                console.log(reply.status)
-                if (reply.status == 200) {
-                    console.log(reply.data.messages);
-                }
+                //
             }
         } else {
             console.log("Chat message Empty.");
@@ -85,10 +82,7 @@ const RestaurantChat = () => {
                         <div id="section1" >
                         {RestaurantChatList && RestaurantChatList.map(chat =>
                                 <div>
-                                    <div class="container">
-                                        <p>{chat}</p>
-                                    </div>
-                                    <br></br>
+                                        <p>User : {chat}</p>
                                 </div>
                             )}
                         </div>

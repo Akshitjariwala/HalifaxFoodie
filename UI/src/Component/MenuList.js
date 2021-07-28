@@ -19,7 +19,8 @@ const MenuList = () => {
     var sessionRestaurant = localStorage.getItem("sessionRestaurant");
 
     useEffect(() => {
-        fetchMenu(localStorage.getItem('sessionRestaurant'));
+        console.log(localStorage.getItem('sessionRestaurant'))
+        var mnList =  fetchMenu(localStorage.getItem('sessionRestaurant'));
     }, [])
 
     //var Menu List;
