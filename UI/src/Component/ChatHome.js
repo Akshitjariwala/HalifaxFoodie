@@ -12,24 +12,22 @@ const ChatHome = () => {
     const history = useHistory();
     const location = useLocation();
 
+    const [userChatError, setUserChatError] = useState("")
+    const [userChatList, setUserChatList] = useState("")
+
     useEffect(async () => {
-        //let reply = await fetchChatMessageRestaurant();
-        //setUserChatList(reply.data.messages);
-        //setUserChatList(location.restaurentMessagesList);
-        //console.log(reply.data.messages)
-        const interval = setInterval( async () =>{ 
+        const interval = setInterval( async () =>{
             let reply = await fetchChatMessageRestaurant();
-            setUserChatList(reply.data.messages);
-            setUserChatList(location.restaurentMessagesList);
-            console.log(reply.data.messages)
-        }, 1000);
+            var msg = reply.data.messages;
+            if(reply.data.length > 0){
+                setUserChatList((userChatList) => [...userChatList,msg]);
+            }
+        }, 10000);
     },[])
 
     const [userChat, setuserChat] = useState({
         message:""
     })
-    const [userChatError, setUserChatError] = useState("")
-    const [userChatList, setUserChatList] = useState("")
     
     const inputEventChat = (event) => {
         const name = event.target.name;
@@ -54,12 +52,9 @@ const ChatHome = () => {
             let res = await pushChatMessage(userChat);
             console.log(res.status);
             if(res.status == 200){
-                // redirect to restaurant chat page.
                 let reply = await fetchChatMessage();
                 if(reply.status == 200){
                     console.log(reply.data.messages);
-                    //setUserChatList(reply.data.messages);
-                    //history.push({ pathname: '/restaurantChat', userMessagesList : reply.data.messages })
                 }
             }
         } else {

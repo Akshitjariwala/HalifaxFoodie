@@ -137,9 +137,7 @@ const RegistrationForm = () => {
                 <div class="container-fluid">
                     <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav">
-                            <li><Link to='/login'>Login</Link></li>
-                            <li><Link to='/customerRegistration'>Register as User</Link></li>
-                            <li><Link to='/restaurantRegistration'>Register as Restaurant</Link></li>
+                          
                         </ul>
                     </div>
                 </div>

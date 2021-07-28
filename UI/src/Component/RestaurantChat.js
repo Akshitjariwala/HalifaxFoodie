@@ -20,13 +20,13 @@ const RestaurantChat = () => {
     const [RestaurantChatError, setRestaurantChatError] = useState("")
 
     useEffect( async () => {
-        //let reply = await fetchChatMessage();
         const interval = setInterval( async () =>{ 
-            setRestaurantChatList(location.userMessagesList);
             let reply = await fetchChatMessage();
-            console.log(reply.data.messages)
-            setRestaurantChatList(reply.data.messages);
-        }, 1000);
+            var msg = reply.data.messages;
+            if(reply.data.length > 0){
+                setRestaurantChatList((RestaurantChatList) => [...RestaurantChatList,msg]);
+            } 
+        }, 10000);
     },[])
 
     const inputEventChat = (event) => {
@@ -52,13 +52,10 @@ const RestaurantChat = () => {
             let res = await pushChatMessageRestaurant(RestaurantChat);
             console.log(res.status);
             if(res.status == 200){
-                // redirect to user chat page.
                 let reply = await fetchChatMessageRestaurant();
                 console.log(reply.status)
                 if(reply.status == 200){
                     console.log(reply.data.messages);
-                    //setRestaurantChatList(reply.data.messages);
-                    //history.push({ pathname: '/chatHome', restaurentMessagesList : reply.data.messages })
                 }
             }
         } else {
@@ -106,7 +103,8 @@ const RestaurantChat = () => {
                         </div>
                         <br></br>
                     </div>
-                )}
+                )
+        }
             </div>
         </div>
       </div>

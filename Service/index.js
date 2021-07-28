@@ -254,6 +254,7 @@ app.get("/GetChatMessage", (req, res) => {
       count += 1;
       messageName = 'message_'+count
       messageList.push(message.data.toString());
+      message.ack();
     };
     const subscription = pubSubClient.subscription(subscriptionName);
 
@@ -264,7 +265,7 @@ app.get("/GetChatMessage", (req, res) => {
       console.log(`${count} message(s) received.`);
       console.log(messageList);
       res.status(200).send({messages:messageList});
-    }, 1 * 1000);
+    }, 10 * 1000);
   }
 });
 
@@ -280,7 +281,7 @@ app.get("/GetChatMessageRestaurant", (req, res) => {
       count += 1;
       messageName = 'message_'+count
       messageList.push(message.data.toString());
-      message = message.data.toString();
+      message.ack();
     };
 
     const subscription = pubSubClient.subscription(subscriptionName);
@@ -292,7 +293,7 @@ app.get("/GetChatMessageRestaurant", (req, res) => {
       console.log(`${count} message(s) received.`);
       console.log(messageList);
       res.status(200).send({messages:messageList});
-    }, 1 * 1000);
+    }, 10 * 1000);
   }
 });
 
