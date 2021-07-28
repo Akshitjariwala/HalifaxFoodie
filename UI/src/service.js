@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const registerUser = (payload) => {
-    return axios.post('http://localhost:3001/Register', payload)
+    return axios.post('https://service-66eshghvya-de.a.run.app/Register', payload)
         .then((res) => {
             return res;
         })
@@ -10,7 +10,7 @@ export const registerUser = (payload) => {
 
 export const getRole = (payload) => {
     console.log(payload);
-    return axios.post('http://localhost:3001/FetchRole', payload)
+    return axios.post('https://service-66eshghvya-de.a.run.app/FetchRole', payload)
         .then((res) => {
             return res;
         })
@@ -18,7 +18,7 @@ export const getRole = (payload) => {
 };
 
 export const registerRestaurant = (restaurantRegistration) => {
-    return axios.post('http://localhost:3001/RegisterRestaurant', restaurantRegistration)
+    return axios.post('https://service-66eshghvya-de.a.run.app/RegisterRestaurant', restaurantRegistration)
         .then((res) => {
             return res;
         })
@@ -26,7 +26,7 @@ export const registerRestaurant = (restaurantRegistration) => {
 };
 
 export const loginUser = (payload) => {
-    return axios.post('http://localhost:3001/Login', payload)
+    return axios.post('https://service-66eshghvya-de.a.run.app/Login', payload)
         .then((res) => {
             return res;
         })
@@ -34,7 +34,7 @@ export const loginUser = (payload) => {
 };
 
 export const saveMenuItem = (payload) => {
-    return axios.post('http://localhost:3001/SaveMenuItem', payload)
+    return axios.post('https://service-66eshghvya-de.a.run.app/SaveMenuItem', payload)
         .then((res) => {
             return res;
         })
@@ -42,7 +42,7 @@ export const saveMenuItem = (payload) => {
 };
 
 export const calculateML = (payload) => {
-    return axios.post('http://localhost:3001/getSimilarity', payload)
+    return axios.post('https://service-66eshghvya-de.a.run.app/getSimilarity', payload)
         .then((res) => {
             return res;
         })
@@ -50,7 +50,7 @@ export const calculateML = (payload) => {
 };
 
 export const getMenuList = (payload) => {
-    return axios.get('http://localhost:3001/GetMenuList', { params: { payload } })
+    return axios.get('https://service-66eshghvya-de.a.run.app/GetMenuList', { params: { payload } })
         .then((res) => {
             return res;
         })
@@ -58,7 +58,7 @@ export const getMenuList = (payload) => {
 };
 
 export const placeOrder = (payload) => {
-    return axios.post('http://localhost:3001/placeOrder', payload)
+    return axios.post('https://service-66eshghvya-de.a.run.app/placeOrder', payload)
         .then((res) => {
             return res;
         })
@@ -67,7 +67,7 @@ export const placeOrder = (payload) => {
 
 export const getOrders = (payload) => {
     console.log(payload);
-    return axios.get('http://localhost:3001/getOrders', { params: payload })
+    return axios.get('https://service-66eshghvya-de.a.run.app/getOrders', { params: payload })
         .then((res) => {
             return res;
         })
@@ -75,7 +75,7 @@ export const getOrders = (payload) => {
 };
 
 export const updateOrder = (payload) => {
-    return axios.post('http://localhost:3001/updateOrder', payload)
+    return axios.post('https://service-66eshghvya-de.a.run.app/updateOrder', payload)
         .then((res) => {
             return res;
         })
@@ -83,7 +83,7 @@ export const updateOrder = (payload) => {
 };
 
 export const getRestaurantList = () => {
-    return axios.get('http://localhost:3001/GetRestaurantList')
+    return axios.get('https://service-66eshghvya-de.a.run.app/GetRestaurantList')
         .then((res) => {
             return res;
         })
@@ -91,7 +91,7 @@ export const getRestaurantList = () => {
 };
 
 export const pushChatMessage = (payload) => {
-    return axios.post('http://localhost:3001/PublishChatMessage', payload)
+    return axios.post('https://service-66eshghvya-de.a.run.app/PublishChatMessage', payload)
         .then((res) => {
             return res;
         })
@@ -99,7 +99,7 @@ export const pushChatMessage = (payload) => {
 };
 
 export const fetchChatMessage = () => {
-    return axios.get('http://localhost:3001/GetChatMessage')
+    return axios.get('https://service-66eshghvya-de.a.run.app/GetChatMessage')
         .then((res) => {
             return res;
         })
@@ -107,7 +107,7 @@ export const fetchChatMessage = () => {
 };
 
 export const pushChatMessageRestaurant = (payload) => {
-    return axios.post('http://localhost:3001/PublishChatMessageRestaurant', payload)
+    return axios.post('https://service-66eshghvya-de.a.run.app/PublishChatMessageRestaurant', payload)
         .then((res) => {
             return res;
         })
@@ -115,7 +115,7 @@ export const pushChatMessageRestaurant = (payload) => {
 };
 
 export const fetchChatMessageRestaurant = () => {
-    return axios.get('http://localhost:3001/GetChatMessageRestaurant')
+    return axios.get('https://service-66eshghvya-de.a.run.app/GetChatMessageRestaurant')
         .then((res) => {
             console.log(res)
             return res;
@@ -124,7 +124,7 @@ export const fetchChatMessageRestaurant = () => {
 };
 
 export const logoutUser = () => {
-    return axios.post('http://localhost:3001/Logout')
+    return axios.post('https://service-66eshghvya-de.a.run.app/Logout')
         .then((res) => {
             console.log(res)
             return res;
