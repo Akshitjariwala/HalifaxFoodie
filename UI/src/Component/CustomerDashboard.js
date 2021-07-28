@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import axios from 'axios';
 import { useHistory } from "react-router-dom";
-import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { BrowserRouter, Switch, Link, Route } from 'react-router-dom';
+import LexChat from './LexChat';
+import CustomerNavBar from './CustomerNavBar';
 
 const UserHome = () => {
     const history = useHistory();
@@ -26,7 +25,7 @@ const UserHome = () => {
 
     function validate(userAnswer) {
         let isValid = true;
-        if (userAnswer == "") {
+        if (userAnswer === "") {
             setUserAnswerError("Please Provide Answer")
             isValid = false;
         }
@@ -38,8 +37,8 @@ const UserHome = () => {
         setUserResponse(location.answer)
         console.log(location.answer)
         if (validate(userAnswer)) {
-            if (userResponse == userAnswer) {
-                if (location.role == "user") {
+            if (userResponse === userAnswer) {
+                if (location.role === "user") {
                     history.push("/customerHome");
                 } else {
                     history.push("/restaurantHome");
@@ -51,22 +50,13 @@ const UserHome = () => {
         }
     }
 
-    const styles = {
-        color: "white"
-    };
-
-    const dropDownStyle = { width: "945px" };
-
     return (
-        <div class="tabBody">
-            <div class="homenav">
-                <Link to='/chatHome'>Chat</Link>
-                <Link to='/restaurantList'>Restaurant</Link>
-            </div>
-
+        <div>
+            <CustomerNavBar />
             <div style={{ "margin-left": "250px" }}>
                 <h2>User Home</h2>
             </div>
+            <LexChat />
         </div>
     );
 }

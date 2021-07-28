@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@google-cloud/firestore": "^4.13.2",
+    "@google-cloud/pubsub": "^2.16.1",
     "aws-api-gateway-client": "^0.3.7",
     "aws-sdk": "^2.950.0",
     "cors": "^2.8.5",
