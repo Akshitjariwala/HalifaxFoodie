@@ -19,6 +19,7 @@ const ChatHome = () => {
             let reply = await fetchChatMessageRestaurant();
             if(reply.status == 200){
                 var msg = reply.data.messages;
+                msg = "Restaurant : "+msg;
                 setUserChatList((userChatList) => [...userChatList,msg]);
             }
         }, 10*1000);
@@ -51,6 +52,8 @@ const ChatHome = () => {
         console.log("Chat Sent : " + userChat.message);
         let res;
         if (validate(userChat)) {
+            var userMsg = "User : "+userChat.message;
+            setUserChatList((userChatList) => [...userChatList,userMsg]);
             res = await pushChatMessage(userChat);
             console.log(res.status);
             if (res.status == 200) {
@@ -85,7 +88,7 @@ const ChatHome = () => {
                         <div id="section1" >
                         {userChatList && userChatList.map(chat =>
                                 <div>
-                                    <p>Restaurant : {chat}</p>
+                                    <p>{chat}</p>
                                 </div>
                             )}
                         </div>

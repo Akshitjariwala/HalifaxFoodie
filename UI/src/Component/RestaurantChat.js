@@ -24,6 +24,7 @@ const RestaurantChat = () => {
             let reply = await fetchChatMessage();
             if(reply.status == 200){
                 var msg = reply.data.messages;
+                msg = "User : "+msg;
                 setRestaurantChatList((RestaurantChatList) => [...RestaurantChatList,msg]);
             }
         }, 10* 1000);
@@ -49,6 +50,8 @@ const RestaurantChat = () => {
         event.preventDefault()
         console.log("Chat Sent : " + RestaurantChat.message);
         if (validate(RestaurantChat)) {
+            var userMsg = "Restaurant : "+RestaurantChat.message;
+            setRestaurantChatList((RestaurantChatList) => [...RestaurantChatList,userMsg]);
             let res = await pushChatMessageRestaurant(RestaurantChat);
             console.log(res.status);
             if (res.status == 200) {
@@ -82,7 +85,7 @@ const RestaurantChat = () => {
                         <div id="section1" >
                         {RestaurantChatList && RestaurantChatList.map(chat =>
                                 <div>
-                                        <p>User : {chat}</p>
+                                        <p>{chat}</p>
                                 </div>
                             )}
                         </div>
