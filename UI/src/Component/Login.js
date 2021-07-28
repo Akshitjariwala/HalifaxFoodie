@@ -3,9 +3,8 @@ import { loginUser } from '../service';
 import { useHistory } from "react-router-dom";
 import { getRole } from '../service';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
-const Login = () => {
+const Login = (props) => {
     const history = useHistory();
     const initialState = () => {
         setUserEmailError("")
@@ -40,7 +39,7 @@ const Login = () => {
             isValid = false;
         }
 
-        if (userData.userPassword != "" && userData.userPassword.length < 8) {
+        if (userData.userPassword !== "" && userData.userPassword.length < 8) {
             isValid = false;
             window.alert("Password should be atleast 8 characters long.");
         }
@@ -59,9 +58,9 @@ const Login = () => {
             var response = res.data;
             var userId = response.uid;
             var userEmail = userData.userEmail;
-            if (res.status == 200) {
+            if (res.status === 200) {
                 let role = await getRole(userData);
-                if (role.status == 200) {
+                if (role.status === 200) {
                     var resRole = role.data;
                     var userRole = resRole.userRole;
                     console.log(resRole)
@@ -71,6 +70,7 @@ const Login = () => {
                     console.log(responseFromLambda)
                     var securityQuestion = responseFromLambda.securityQuestion;
                     var answer = responseFromLambda.answer;
+                    props?.callback(true);
                     history.push({ pathname: '/multiFactor', securityQuestion: securityQuestion, answer: answer, role: userRole, email: userEmail });
                 } else {
                     window.alert("Role Fetching Failed.");
@@ -82,31 +82,14 @@ const Login = () => {
         }
     }
 
-    const styles = {
-        color: "white"
-    };
-
-    const dropDownStyle = { width: "945px" };
     return (
-        <div>
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-                <div class="container-fluid">
-                    <div class="collapse navbar-collapse" id="myNavbar">
-                        <ul class="nav navbar-nav">
-                            <li><Link to='/login'>Login</Link></li>
-                            <li><Link to='/customerRegistration'>Register as User</Link></li>
-                            <li><Link to='/restaurantRegistration'>Register as Restaurant</Link></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        <div class="container tabBody">
-            <form class="form-horizontal" onSubmit={handleLogin}>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="userEmail">Email:</label>
-                    <div class="col-sm-10">
+        <div className="container tabBody">
+            <form className="form-horizontal" onSubmit={handleLogin}>
+                <div className="form-group">
+                    <label className="control-label col-sm-2" for="userEmail">Email:</label>
+                    <div className="col-sm-10">
                         <input type="email"
-                            class="form-control"
+                            className="form-control"
                             id="userEmail"
                             placeholder="Enter Email"
                             name="userEmail"
@@ -115,11 +98,11 @@ const Login = () => {
                     </div>
                     <div style={{ fontSize: 12, color: 'red', "margin-left": '210px' }}>{userEmailError}</div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="userPassword">Password:</label>
-                    <div class="col-sm-10">
+                <div className="form-group">
+                    <label className="control-label col-sm-2" for="userPassword">Password:</label>
+                    <div className="col-sm-10">
                         <input type="password"
-                            class="form-control"
+                            className="form-control"
                             id="userPassword"
                             placeholder="Enter Password"
                             name="userPassword"
@@ -129,16 +112,15 @@ const Login = () => {
                     </div>
                     <div style={{ fontSize: 12, color: 'red', "margin-left": '210px' }}>{userPasswordError}</div>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">Login</button>
+                <div className="form-group">
+                    <div className="col-sm-offset-2 col-sm-10">
+                        <button type="" className="btn btn-default" onClick={() => props.callback(true)}>Login</button>
                     </div>
                 </div>
                 <div>
                 </div>
             </form>
         </div>
-    </div>
     );
 }
 export default Login;

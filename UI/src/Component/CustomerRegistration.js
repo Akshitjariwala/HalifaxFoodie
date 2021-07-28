@@ -1,5 +1,4 @@
 import React, { useState, Link } from 'react'
-import axios from 'axios';
 import { registerUser } from '../service';
 import firebase from 'firebase';
 import { useHistory } from "react-router-dom";
@@ -64,27 +63,27 @@ const RegistrationForm = () => {
             isValid = false;
         }
 
-        if (userRegistration.userName == "") {
+        if (userRegistration.userName === "") {
             setUserNameError("Please Enter User Name");
             isValid = false;
         }
 
-        if (userRegistration.userPassword.length < 8 && userRegistration.userPassword != "") {
+        if (userRegistration.userPassword.length < 8 && userRegistration.userPassword !== "") {
             isValid = false;
             window.alert("Password should be atleast 8 characters long.");
         }
 
-        if (userRegistration.confirmPassword.length < 8 && userRegistration.confirmPassword != "") {
+        if (userRegistration.confirmPassword.length < 8 && userRegistration.confirmPassword !== "") {
             isValid = false;
             window.alert("Password should be atleast 8 characters long.");
         }
 
-        if (userRegistration.userPassword == "") {
+        if (userRegistration.userPassword === "") {
             setPasswordError("Please Enter Password")
             isValid = false;
         }
 
-        if (userRegistration.confirmPassword == "") {
+        if (userRegistration.confirmPassword === "") {
             setConfirmPasswordError("Please Enter Confirm Password")
             isValid = false;
         }
@@ -94,16 +93,16 @@ const RegistrationForm = () => {
             window.alert("Invalid Contact Number. Contact number length cannnot be greater than 10.")
         }
 
-        if ((userRegistration.userPassword != "" && userRegistration.userConfirmPassword != "") && (userRegistration.userPassword != userRegistration.confirmPassword)) {
+        if ((userRegistration.userPassword !== "" && userRegistration.userConfirmPassword !== "") && (userRegistration.userPassword !== userRegistration.confirmPassword)) {
             window.alert("Password and Confirm Password does not match.")
         }
 
-        if (userRegistration.answer == "") {
+        if (userRegistration.answer === "") {
             setanswerError("Please Enter Answer")
             isValid = false;
         }
 
-        if (userRegistration.contactNumber == "") {
+        if (userRegistration.contactNumber === "") {
             setcontactNumberError("Please Enter Contact Number")
             isValid = false;
         }
@@ -116,7 +115,7 @@ const RegistrationForm = () => {
         if (validate(userRegistration)) {
             let res = await registerUser(userRegistration)
             console.log(res.status);
-            if (res.status == 200) {
+            if (res.status === 200) {
                 window.alert("User Successfully Registerred.")
                 history.push("/login");
             } else {
@@ -126,31 +125,15 @@ const RegistrationForm = () => {
         }
     }
 
-    const styles = {
-        color: "white"
-    };
-
     const dropDownStyle = { width: "945px" };
     return (
-        <div>
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-                <div class="container-fluid">
-                    <div class="collapse navbar-collapse" id="myNavbar">
-                        <ul class="nav navbar-nav">
-                            <li><Link to='/login'>Login</Link></li>
-                            <li><Link to='/customerRegistration'>Register as User</Link></li>
-                            <li><Link to='/restaurantRegistration'>Register as Restaurant</Link></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
         <div class="container tabBody">
             <form class="form-horizontal" onSubmit={HandleRegister}>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="userName">Name:</label>
                     <div class="col-sm-10">
                         <input type="type"
-                            class="form-control"
+                            className="form-control"
                             id="userName"
                             placeholder="Enter name"
                             name="userName"
@@ -159,11 +142,11 @@ const RegistrationForm = () => {
                     </div>
                     <div style={{ fontSize: 12, color: 'red', "margin-left": '210px' }}>{userNameError}</div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="userEmail">Email:</label>
-                    <div class="col-sm-10">
+                <div className="form-group">
+                    <label className="control-label col-sm-2" for="userEmail">Email:</label>
+                    <div className="col-sm-10">
                         <input type="email"
-                            class="form-control"
+                            className="form-control"
                             id="userEmail"
                             placeholder="Enter email"
                             name="userEmail"
@@ -172,11 +155,11 @@ const RegistrationForm = () => {
                     </div>
                     <div style={{ fontSize: 12, color: 'red', "margin-left": '210px' }}>{emailError}</div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="userPassword">Password:</label>
-                    <div class="col-sm-10">
+                <div className="form-group">
+                    <label className="control-label col-sm-2" for="userPassword">Password:</label>
+                    <div className="col-sm-10">
                         <input type="password"
-                            class="form-control"
+                            className="form-control"
                             id="userPassword"
                             placeholder="Enter password"
                             name="userPassword"
@@ -187,11 +170,11 @@ const RegistrationForm = () => {
                     <div style={{ fontSize: 12, color: 'red', "margin-left": '210px' }}>{PasswordError}</div>
                 </div>
 
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="confirmPassword">Confirm Password:</label>
-                    <div class="col-sm-10">
+                <div className="form-group">
+                    <label className="control-label col-sm-2" for="confirmPassword">Confirm Password:</label>
+                    <div className="col-sm-10">
                         <input type="password"
-                            class="form-control"
+                            className="form-control"
                             id="confirmPassword"
                             placeholder="Enter password again"
                             name="confirmPassword"
@@ -202,11 +185,11 @@ const RegistrationForm = () => {
                     <div style={{ fontSize: 12, color: 'red', "margin-left": '210px' }}>{confirmPasswordError}</div>
                 </div>
 
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="contactNumber">Conatct Number:</label>
-                    <div class="col-sm-10">
+                <div className="form-group">
+                    <label className="control-label col-sm-2" for="contactNumber">Conatct Number:</label>
+                    <div className="col-sm-10">
                         <input type="tel"
-                            class="form-control"
+                            className="form-control"
                             id="contactNumber"
                             placeholder="Enter contact number"
                             name="contactNumber"
@@ -216,10 +199,10 @@ const RegistrationForm = () => {
                     </div>
                     <div style={{ fontSize: 12, color: 'red', "margin-left": '210px' }}>{contactNumberError}</div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="securityQuestion">Security Question :</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" id="securityQuestion" name="securityQuestion" value={userRegistration.securityQuestion} style={dropDownStyle} onChange={inputEventUserRegistration}>
+                <div className="form-group">
+                    <label className="control-label col-sm-2" for="securityQuestion">Security Question :</label>
+                    <div className="col-sm-10">
+                        <select className="form-control" id="securityQuestion" name="securityQuestion" value={userRegistration.securityQuestion} style={dropDownStyle} onChange={inputEventUserRegistration}>
                             <option value='1'>What is your Monther's maiden name ?</option>
                             <option value='2'>The country you always dreamed of vacationing in ?</option>
                             <option value='3'>What is your favourite colour ?</option>
@@ -231,11 +214,11 @@ const RegistrationForm = () => {
                     </div>
                     <div style={{ fontSize: 12, color: 'red', "margin-left": '210px' }}>{securityQuestionError}</div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="answer">Answer:</label>
-                    <div class="col-sm-10">
+                <div className="form-group">
+                    <label className="control-label col-sm-2" for="answer">Answer:</label>
+                    <div className="col-sm-10">
                         <input type="type"
-                            class="form-control"
+                            className="form-control"
                             id="answer"
                             placeholder="Enter Answer"
                             name="answer"
@@ -246,13 +229,12 @@ const RegistrationForm = () => {
                     <div style={{ fontSize: 12, color: 'red', "margin-left": '210px' }}>{answerError}</div>
                 </div>
 
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">Register</button>
+                <div className="form-group">
+                    <div className="col-sm-offset-2 col-sm-10">
+                        <button type="submit" className="btn btn-default">Register</button>
                     </div>
                 </div>
             </form>
-        </div>
         </div>
     );
 }
