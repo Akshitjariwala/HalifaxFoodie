@@ -1,4 +1,6 @@
 import axios from 'axios';
+const cors = require("cors");
+
 
 export const registerUser = (payload) => {
     return axios.post('http://localhost:3001/Register', payload)
@@ -34,6 +36,14 @@ export const loginUser = (payload) => {
 
 export const saveMenuItem = (payload) => {
     return axios.post('http://localhost:3001/SaveMenuItem', payload)
+        .then((res) => {
+            return res;
+        })
+        .catch(err => { return err.response })
+};
+
+export const calculateML = (payload) => {
+    return axios.post('http://localhost:3001/getSimilarity', payload)
         .then((res) => {
             return res;
         })

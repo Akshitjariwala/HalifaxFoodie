@@ -309,6 +309,7 @@ const RestaurantRegistration = () => {
                     </div>
                 </div>
             </form>
+        
         </div>
     );
 }
