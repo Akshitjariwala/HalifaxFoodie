@@ -24,7 +24,7 @@ const AddMenu = () => {
         itemDescription:"",
         itemRecipe:"",
         itemPrice:"",
-        restaurantName:location.resEmail
+        restaurantName:localStorage.getItem("sessionEmail")
     });
 
     const initialState = () => {

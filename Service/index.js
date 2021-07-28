@@ -82,6 +82,7 @@ app.get("/GetRestaurantList", (req, res) => {
     var refList = await ref.get();
     refList.forEach(doc => {
       var restaurants = {}
+      restaurants["userEmail"] = doc.data().userEmail;
       restaurants["restaurantName"] = doc.data().restaurantName;
       restaurants["restaurantEmail"] = doc.data().restaurantEmail;
       restaurants["restaurantAddress"] = doc.data().restaurantAddress;

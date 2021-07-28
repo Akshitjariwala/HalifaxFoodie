@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { BrowserRouter, Switch, Link, Route } from 'react-router-dom';
-import { CustomerRegistration, RestaurantChat, RestaurantRegistration, Login, MultiFactor, RestaurantDashboard, MenuList, AddMenu, Orders, CustomerDashboard, RestaurantList, ChatHome, Cart, Payment } from './Component'
+import { CustomerRegistration, RestaurantChat, Visualisation, RestaurantRegistration, Login, MultiFactor, RestaurantDashboard, MenuList, AddMenu, Orders, CustomerDashboard, RestaurantList, ChatHome, Cart, Payment, WordCloud } from './Component'
 
+var sessionEmail = localStorage.getItem('sessionEmail') || null;
 const Routes = () => {
-    const history = useHistory();
     return (
         <BrowserRouter>
-            <nav className="navbar navbar-inverse navbar-fixed-top">
+            {!sessionEmail && <nav className="navbar navbar-inverse navbar-fixed-top">
                 <div className="container-fluid" style={{ float: 'right' }}>
                     <div className="collapse navbar-collapse" id="myNavbar">
                         <ul className="nav navbar-nav">
@@ -17,7 +17,7 @@ const Routes = () => {
                         </ul>
                     </div>
                 </div>
-            </nav>
+            </nav>}
             <Route path="/customerRegistration" component={CustomerRegistration}></Route>
             <Route path="/restaurantRegistration" component={RestaurantRegistration}></Route>
             <Route path="/login" component={Login}></Route>
@@ -28,10 +28,12 @@ const Routes = () => {
             <Route path="/restaurantList" component={RestaurantList}></Route>
             <Route path="/menuList" component={MenuList}></Route>
             <Route path="/addMenu" component={AddMenu}></Route>
-            {/* <Route path="/restaurantChat" component={RestaurantChat}></Route> */}
+            <Route path="/wordCloud" component={WordCloud}></Route>
+            <Route path="/restaurantChat" component={RestaurantChat}></Route>
             <Route path="/orders" component={Orders}></Route>
             <Route path="/cart" component={Cart}></Route>
             <Route path="/payment" component={Payment}></Route>
+            <Route path="/visualisation" component={Visualisation}></Route>
         </BrowserRouter>
     )
 }

@@ -22,6 +22,7 @@ const RestaurantNavBar = (props) => {
         <div className="homenav">
             <Link to='/restaurantHome'>Home</Link>
             <Link to={{ pathname: '/addMenu' }}>Add Menu</Link>
+            <Link to='/menuList'>Menu List</Link>
             <Link to='/restaurantChat'>Chat</Link>
             <Link to='/orders'>Orders</Link>
             <Link to='/wordCloud'>Word Cloud</Link>

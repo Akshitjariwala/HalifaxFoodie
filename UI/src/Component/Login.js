@@ -68,7 +68,7 @@ const Login = (props) => {
                     console.log(resRole)
                     console.log(userId)
                     localStorage.setItem('sessionEmail',userEmail);
-                    localStorage.setItem('sessionRole',userId);
+                    localStorage.setItem('sessionRole',userRole);
                     var response = await axios.post('https://ti9nlzbjo4.execute-api.us-east-1.amazonaws.com/default/multifactorVerification?userID=' + userId + '&role=' + userRole)
                     var responseFromLambda = response.data;
                     console.log(responseFromLambda)
