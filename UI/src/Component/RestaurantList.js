@@ -25,6 +25,7 @@ const RestaurantList = () => {
     }
 
     const handleRestaurentClick = (event, data) => {
+        console.log(data);
         localStorage.setItem('sessionRestaurant',data);
         history.push({ pathname: '/menuList', data: data });
     }
@@ -39,7 +40,7 @@ const RestaurantList = () => {
                     <div className="card">
                         <div className="container">
                             <br></br>
-                            <p><Link onClick={((e) => handleRestaurentClick(e, restaurant.restaurantEmail))}>{restaurant.restaurantName}</Link></p>
+                            <p><Link onClick={((e) => handleRestaurentClick(e, restaurant.userEmail))}>{restaurant.restaurantName}</Link></p>
                             <p>{restaurant.restaurantDescription}</p>
                             <p>{restaurant.restaurantAddress}</p>
                             <p>{restaurant.contactNumber}</p>

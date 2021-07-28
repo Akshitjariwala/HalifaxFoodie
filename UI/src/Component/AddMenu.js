@@ -24,7 +24,7 @@ const AddMenu = () => {
         itemDescription:"",
         itemRecipe:"",
         itemPrice:"",
-        restaurantName:location.resEmail
+        restaurantName:localStorage.getItem("sessionEmail")
     });
 
     const initialState = () => {
@@ -90,7 +90,6 @@ const AddMenu = () => {
             } else {
                 window.alert("Error in similarity check")
             }
-
 
         if(validate(menuDish)) {
             console.log(menuDish);

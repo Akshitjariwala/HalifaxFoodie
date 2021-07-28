@@ -14,8 +14,7 @@ const MenuList = () => {
     const [restaurenEmail, setRestaurantEmail] = useState("")
 
     useEffect(() => {
-        setRestaurantEmail(location.email);
-        fetchMenu(localStorage.getItem("sessionRestaurant"));
+        fetchMenu(localStorage.getItem('sessionRestaurant'));
     }, [])
 
     //var Menu List;

@@ -51,12 +51,9 @@ const ChatHome = () => {
             let res = await pushChatMessage(userChat);
             console.log(res.status);
             if (res.status == 200) {
-                // redirect to restaurant chat page.
                 let reply = await fetchChatMessage();
                 if (reply.status == 200) {
                     console.log(reply.data.messages);
-                    //setUserChatList(reply.data.messages);
-                    //history.push({ pathname: '/restaurantChat', userMessagesList : reply.data.messages })
                 }
             }
         } else {

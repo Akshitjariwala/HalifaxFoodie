@@ -13,8 +13,8 @@ var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 var apigClientFactory = require('aws-api-gateway-client').default;
 config = { invokeUrl: 'https://7qk3g6xwoc.execute-api.us-east-1.amazonaws.com/default/securityQuestion' }
 var axios = require('axios');
-//const { PubSub } = require('@google-cloud/pubsub');
-//const pubSubClient = new PubSub();
+const { PubSub } = require('@google-cloud/pubsub');
+const pubSubClient = new PubSub();
 
 const db = mysql.createConnection({
   user: "admin",
@@ -40,7 +40,6 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/Register", (req, res) => {
-
   const userEmail = req.body.userEmail
   const userPassword = req.body.userPassword
   const userdata = req.body;
@@ -82,6 +81,7 @@ app.get("/GetRestaurantList", (req, res) => {
     var refList = await ref.get();
     refList.forEach(doc => {
       var restaurants = {}
+      restaurants["userEmail"] = doc.data().userEmail;
       restaurants["restaurantName"] = doc.data().restaurantName;
       restaurants["restaurantEmail"] = doc.data().restaurantEmail;
       restaurants["restaurantAddress"] = doc.data().restaurantAddress;
@@ -200,7 +200,6 @@ app.post("/FetchRole", (req, res) => {
 });
 
 app.post("/RegisterRestaurant", (req, res) => {
-
   const restaurantName = req.body.restaurantName;
   const userEmail = req.body.userEmail;
   const userPassword = req.body.userPassword;
@@ -208,7 +207,6 @@ app.post("/RegisterRestaurant", (req, res) => {
   const securityQuestion = req.body.securityQuestion;
   const mfaAnswer = req.body.answer;
   const role = req.body.userRole;
-
   if (userEmail != "" && userPassword != "") {
     firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword).then((userCredential) => {
       const uid = userCredential.user.uid;
