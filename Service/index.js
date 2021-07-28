@@ -13,8 +13,8 @@ var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 var apigClientFactory = require('aws-api-gateway-client').default;
 config = { invokeUrl: 'https://7qk3g6xwoc.execute-api.us-east-1.amazonaws.com/default/securityQuestion' }
 var axios = require('axios');
-const { PubSub } = require('@google-cloud/pubsub');
-const pubSubClient = new PubSub();
+//const { PubSub } = require('@google-cloud/pubsub');
+//const pubSubClient = new PubSub();
 
 const db = mysql.createConnection({
   user: "admin",
