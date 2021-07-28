@@ -48,6 +48,31 @@ export const getMenuList = (payload) => {
         .catch(err => { return err.response })
 };
 
+export const placeOrder = (payload) => {
+    return axios.post('http://localhost:3001/placeOrder', payload)
+        .then((res) => {
+            return res;
+        })
+        .catch(err => { return err.response })
+};
+
+export const getOrders = (payload) => {
+    console.log(payload);
+    return axios.get('http://localhost:3001/getOrders',  {params:payload})
+        .then((res) => {
+            return res;
+        })
+        .catch(err => { return err.response })
+};
+
+export const updateOrder = (payload) => {
+    return axios.post('http://localhost:3001/updateOrder', payload)
+        .then((res) => {
+            return res;
+        })
+        .catch(err => { return err.response })
+};
+
 export const getRestaurantList = () => {
     return axios.get('http://localhost:3001/GetRestaurantList')
         .then((res) => {
