@@ -41,11 +41,12 @@ app.use(express.json());
 
 app.post("/Register", (req, res) => {
   const userEmail = req.body.userEmail
-  const userPassword = req.body.userPassword
+  const userPassword = req.body.userPassword;
   const userdata = req.body;
   const role = req.body.userRole;
-  const securityQuestion = req.body.securityQuestion
-  const mfaAnswer = req.body.answer
+  const securityQuestion = req.body.securityQuestion;
+  const mfaAnswer = req.body.answer;
+  console.log(req.body);
 
   if (userEmail != "" && userPassword != "") {
     firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword).then((userCredential) => {
@@ -313,14 +314,14 @@ app.post("/PublishChatMessageRestaurant", (req, res) => {
 app.get("/GetChatMessage", (req, res) => {
   console.log("In Get User Chat.")
   fetchMessages();
-  async function fetchMessages() {
+  async function fetchMessages(){
     var messageList = []
     const subscriptionName = "InstantMessagingSub-Restaurant";
     var count = 0;
     var messageName;
     const messageHandler = message => {
       count += 1;
-      messageName = 'message_' + count
+      messageName = 'message_'+count
       messageList.push(message.data.toString());
     };
     const subscription = pubSubClient.subscription(subscriptionName);
@@ -331,22 +332,22 @@ app.get("/GetChatMessage", (req, res) => {
       subscription.removeListener('message', messageHandler);
       console.log(`${count} message(s) received.`);
       console.log(messageList);
-      res.status(200).send({ messages: messageList });
-    }, 1 * 1000);
+      res.status(200).send({messages:messageList});
+    }, 60 * 1000);
   }
 });
 
 app.get("/GetChatMessageRestaurant", (req, res) => {
   console.log("In Get Restaurant Chat.")
   fetchRestaurantMessages();
-  async function fetchRestaurantMessages() {
+  async function fetchRestaurantMessages(){
     var messageList = []
     const subscriptionName = "InstantMessagingSub-User";
     var count = 0;
     var messageName;
     const messageHandler = message => {
       count += 1;
-      messageName = 'message_' + count
+      messageName = 'message_'+count
       messageList.push(message.data.toString());
       message = message.data.toString();
     };
@@ -359,8 +360,8 @@ app.get("/GetChatMessageRestaurant", (req, res) => {
       subscription.removeListener('message', messageHandler);
       console.log(`${count} message(s) received.`);
       console.log(messageList);
-      res.status(200).send({ messages: messageList });
-    }, 1 * 1000);
+      res.status(200).send({messages:messageList});
+    }, 60 * 1000);
   }
 });
 

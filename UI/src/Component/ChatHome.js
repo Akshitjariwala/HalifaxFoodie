@@ -15,10 +15,11 @@ const ChatHome = () => {
     const location = useLocation();
 
     useEffect(async () => {
-        const interval = setInterval( async () =>{
+        const interval = setInterval( async () =>{ 
             let reply = await fetchChatMessageRestaurant();
-            var msg = reply.data.messages;
-            setUserChatList((userChatList) => [...userChatList,msg]);
+            var mes = reply.data.messages;
+            setUserChatList(reply.data.messages);
+            console.log(reply.data.messages)
         }, 10000);
     },[])
 
@@ -80,10 +81,10 @@ const ChatHome = () => {
             <CustomerNavBar />
             <div class="container">
                 <h5>User Chat</h5>
-                <div class="row" style={{ "height": 400, "overflow-y": "scroll", "margin-top": 80, "margin-left": 220, "border-style": "groove" }}>
+                <div class="row" style={{ "height": 400, "overflow-y": "scroll", "margin-left": 220, "border-style": "groove" }}>
                     <div class="col-sm-9" style={{ "margin-left": "" }}>
                         <div id="section1" >
-                            {userChatList && userChatList.map(chat =>
+                        {userChatList && userChatList.map(chat =>
                                 <div>
                                     <div class="container">
                                         <p>{chat}</p>

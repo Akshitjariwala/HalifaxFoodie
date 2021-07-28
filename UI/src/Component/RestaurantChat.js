@@ -19,13 +19,13 @@ const RestaurantChat = () => {
     const [RestaurantChatList, setRestaurantChatList] = useState("")
     const [RestaurantChatError, setRestaurantChatError] = useState("")
 
-    useEffect(async () => {
-        const interval = setInterval(async () => {
+    useEffect( async () => {
+        const interval = setInterval( async () =>{ 
             let reply = await fetchChatMessage();
-            var msg = reply.data.messages;
-            setRestaurantChatList((RestaurantChatList) => [...RestaurantChatList, msg]);
+            console.log(reply.data.messages)
+            setRestaurantChatList(reply.data.messages);
         }, 10000);
-    }, [])
+    },[])
 
     const inputEventChat = (event) => {
         const name = event.target.name;
@@ -79,19 +79,18 @@ const RestaurantChat = () => {
     return (
         <div>
             <div class="container">
-                <div class="row" style={{ "height": 400, "overflow-y": "scroll", "margin-top": 80, "margin-left": 220, "border-style": "groove" }}>
+                <div class="row" style={{ "height": 400, "overflow-y": "scroll", "margin-left": 220, "border-style": "groove" }}>
                     <RestaurantNavBar />
                     <div class="col-sm-9">
                         <div id="section1" >
-                            {
-                                RestaurantChatList && RestaurantChatList.map(chat =>
-                                    <div>
-                                        <div class="container">
-                                            <p>{chat}</p>
-                                        </div>
-                                        <br></br>
+                        {RestaurantChatList && RestaurantChatList.map(chat =>
+                                <div>
+                                    <div class="container">
+                                        <p>{chat}</p>
                                     </div>
-                                )}
+                                    <br></br>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
