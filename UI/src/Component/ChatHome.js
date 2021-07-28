@@ -14,18 +14,13 @@ const ChatHome = () => {
     const history = useHistory();
     const location = useLocation();
 
-    useEffect(() => {
-        //let reply = await fetchChatMessageRestaurant();
-        //setUserChatList(reply.data.messages);
-        //setUserChatList(location.restaurentMessagesList);
-        //console.log(reply.data.messages)
-        const interval = setInterval(async () => {
+    useEffect(async () => {
+        const interval = setInterval( async () =>{
             let reply = await fetchChatMessageRestaurant();
-            setUserChatList(reply.data.messages);
-            setUserChatList(location.restaurentMessagesList);
-            console.log(reply.data.messages)
-        }, 1000);
-    }, [])
+            var msg = reply.data.messages;
+            setUserChatList((userChatList) => [...userChatList,msg]);
+        }, 10000);
+    },[])
 
     const [userChat, setuserChat] = useState({
         message: ""
