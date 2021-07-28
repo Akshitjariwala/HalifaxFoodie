@@ -1,5 +1,6 @@
 import React , {useState, Link, useEffect} from 'react'
 import { saveMenuItem } from '../service';
+import { calculateML } from '../service';
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
@@ -8,11 +9,14 @@ import { useLocation } from "react-router-dom";
 const AddMenu = () => {
     const history = useHistory();
     const location = useLocation();
+    let score = 0;
+    let dish = "";
 
     const[itemNameError,setuserItemNameError] = useState("");
     const[itemDescriptionError,setitemDescriptionError] = useState("");
     const[itemRecipeError,setitemRecipeError] = useState("");
     const[itemPriceError,setitemPriceError] = useState("");
+    const[mlResponse, setmlResponse] = useState([]);
 
     const[menuDish, setmenuDish] = useState({
         itemName:"",
@@ -65,15 +69,36 @@ const AddMenu = () => {
         return isValid;
     }
 
+    function navigateToRestaurantHome(){
+        history.push("/restaurantHome");
+    }
+
     const handleRegister = async (event) => {
         event.preventDefault()
+            let recipe = {"recipe":menuDish.itemRecipe};
+            let res = await calculateML(recipe);
+            console.log(res.status);
+            if(res.status == 200){
+               setmlResponse(res.data.message);
+               res.data.message.forEach((d) => {
+                    if(d.classification.score > score){
+                        score = d.classification.score;
+                        dish = d.displayName;
+                    }
+               })
+               window.alert(JSON.stringify("Similar dish is "+dish+" with a similarity score "+score));
+            } else {
+                window.alert("Error in similarity check")
+            }
+
+
         if(validate(menuDish)) {
             console.log(menuDish);
             let res = await saveMenuItem(menuDish)
             console.log(res.status);
             if(res.status == 200){
                window.alert("Menu Item Successfully Added.")
-               history.push("/restaurantHome");
+               
             } else {
                 window.alert("Menu Item Registration Failed.")
             }

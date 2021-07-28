@@ -98,3 +98,7 @@ button.main {
   .homenav {padding-top: 15px;}
   .homenav a {font-size: 18px;}
 }
+
+.container {
+  margin-top: 10%;
+}
