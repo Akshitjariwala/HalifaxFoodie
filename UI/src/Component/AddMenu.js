@@ -24,7 +24,9 @@ const AddMenu = () => {
         itemDescription:"",
         itemRecipe:"",
         itemPrice:"",
-        restaurantName:location.resEmail
+        restaurantName:location.resEmail,
+        similarRecipe:"",
+        similarityIndex:""
     });
 
     const initialState = () => {
@@ -84,6 +86,8 @@ const AddMenu = () => {
                     if(d.classification.score > score){
                         score = d.classification.score;
                         dish = d.displayName;
+                        menuDish.similarRecipe=dish;
+                        menuDish.similarityIndex=score;
                     }
                })
                window.alert(JSON.stringify("Similar dish is "+dish+" with a similarity score "+score));
