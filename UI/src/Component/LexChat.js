@@ -10,7 +10,6 @@ const LexChat = () => {
     lexruntime = new AWS.LexRuntime();
     lexruntime = lexruntime;
 
-
     useEffect(() => {
         document.getElementById("inputField").focus();
         AWS.config.region = 'us-east-1'; // Region

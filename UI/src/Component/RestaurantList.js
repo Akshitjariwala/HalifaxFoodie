@@ -25,6 +25,7 @@ const RestaurantList = () => {
     }
 
     const handleRestaurentClick = (event, data) => {
+        localStorage.setItem('sessionRestaurant',data);
         history.push({ pathname: '/menuList', data: data });
     }
 

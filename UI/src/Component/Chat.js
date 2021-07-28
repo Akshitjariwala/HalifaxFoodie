@@ -25,6 +25,14 @@ const ChatHome = () => {
         setUserAnswer(value)
     }
 
+    useEffect(async () => {
+        const interval = setInterval( async () =>{
+            let reply = await fetchChatMessageRestaurant();
+            var msg = reply.data.messages;
+            setUserChatList((userChatList) => [...userChatList,msg]);
+        }, 10000);
+    },[])
+
     function validate(userAnswer) {
         let isValid = true;
         if (userAnswer == "") {

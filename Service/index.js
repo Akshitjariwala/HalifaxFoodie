@@ -13,8 +13,8 @@ var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 var apigClientFactory = require('aws-api-gateway-client').default;
 config = { invokeUrl: 'https://7qk3g6xwoc.execute-api.us-east-1.amazonaws.com/default/securityQuestion' }
 var axios = require('axios');
-// const { PubSub } = require('@google-cloud/pubsub');
-// const pubSubClient = new PubSub();
+const { PubSub } = require('@google-cloud/pubsub');
+const pubSubClient = new PubSub();
 
 const db = mysql.createConnection({
   user: "admin",
@@ -22,9 +22,6 @@ const db = mysql.createConnection({
   password: "Saibaba25",
   database: "project",
 });
-
-
-
 
 // To access firebase database.
 var firebaseConfig = {
@@ -96,50 +93,29 @@ app.get("/GetRestaurantList", (req, res) => {
   }
 });
 
-app.post("/GetMenuList", (req, res) => {
-  var restaurant = req.body; //req.body;
+app.get("/GetMenuList", (req, res) => {
+  var restaurant = req.query.payload; 
   temp = fetchMenu(restaurant);
+  console.log(restaurant);
+  var menuList = []
   async function fetchMenu(restaurant) {
-    var menuList = []
     const resRef = firestore.collection('RestaurantMenuItems');
     const snapshot = await resRef.get();
     snapshot.forEach(doc => {
       var menuItems = {}
+      console.log(doc.data().restaurantName+" "+restaurant);
       if (doc.data().restaurantName === restaurant) {
         menuItems["itemName"] = doc.data().itemName;
         menuItems["itemDescription"] = doc.data().itemDescription;
         menuItems["itemPrice"] = doc.data().itemPrice;
-        menuList.push(menuItems)
+        menuList.push(menuItems);
       }
     });
-    //console.log(menuList)
+    console.log(menuList)
     res.status(200).send({ menuList: menuList });
   }
 });
 
-app.post("/FetchRole", (req, res) => {
-  var userEmail = req.body.userEmail
-  var temp = fetchRole(userEmail); //akshit787@gmail.com ownerkfc@gmail.com 
-
-  async function fetchRole(userEmail) {
-    var userRole;
-    const cityRef = firestore.collection('Users').doc(userEmail);
-    const doc = await cityRef.get();
-    if (doc.exists) {
-      console.log("Inside Function");
-      var userRef = firestore.collection('Users');
-      var snapshot = await userRef.get(userEmail);
-      snapshot.forEach(doc => {
-        if (doc.id === userEmail) {
-          console.log(doc.id, '=>', doc.data());
-          userRole = doc.data().userRole;
-        }
-      });
-      console.log(userRole)
-      res.status(200).send({ userRole: userRole });
-    }
-  };
-});
 app.post("/placeOrder", (req, res) => {
   let order = req.body; //req.body;
   console.log(order);
@@ -188,8 +164,9 @@ app.get("/getOrders", (req, res) => {
 
 
 app.post("/FetchRole", (req, res) => {
-  var userEmail = req.body.userEmail
-  var temp = fetchRole(userEmail); //akshit787@gmail.com ownerkfc@gmail.com 
+  var email = req.body.userEmail;
+  console.log(req.body);
+  var temp = fetchRole(email); //akshit787@gmail.com ownerkfc@gmail.com
 
   async function fetchRole(userEmail) {
     var userRole;
@@ -268,7 +245,7 @@ app.post("/Login", (req, res) => {
       uID = userCredential.user.uid;
       console.log('User Successfully Logged In.');
       console.log(uID);
-      res.status(200).send({ uid: uID });
+      res.status(200).send({uid:uID});
     }).catch(function (error) {
       console.log(error.code);
       console.log(error.message);
@@ -303,6 +280,8 @@ app.post("/getSimilarity", (req, res) => {
     .catch(() => {
       
     });
+  });
+
 // For User
 app.post("/PublishChatMessage", (req, res) => {
   console.log("In Publish User Chat.")
@@ -402,7 +381,6 @@ app.post("/Logout", (req, res) => {
     res.status(400).send();
   })
 });
-
 
 app.listen(3001, () => {
   console.log("Login server is running on port 3001");
