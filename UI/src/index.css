@@ -133,6 +133,9 @@ button.main {
   .homenav a {font-size: 18px;}
 }
 
+.container {
+  margin-top: 10%;
+}
 input::placeholder {
 	color: #ccc;
 	font-style: italic;
