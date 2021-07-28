@@ -15,17 +15,16 @@ const MenuList = () => {
 
     useEffect(() => {
         setRestaurantEmail(location.email);
-        // console.log(location.data);
-        fetchMenu("ownerkfc@gmail.com");
+        fetchMenu(localStorage.getItem("sessionRestaurant"));
     }, [])
 
     //var Menu List;
     async function fetchMenu(restaurantName) {
         let menlist = await getMenuList(restaurantName);
-        // var list = menlist.data.menuList;
-        // setMenuList(list);
-        setMenuList([{ itemName: "chapathi", itemDescription: "wheat, water, salt", itemPrice: 90 }, { itemName: "Dosa", itemDescription: "rice, dal, water, salt", itemPrice: 60 }])
-    }
+        var list = menlist.data.menuList;
+        console.log(list);
+        setMenuList(list);
+   }
 
     const handleRestaurentClick = (event, data) => {
         alert(data);
@@ -38,7 +37,6 @@ const MenuList = () => {
                 console.log(m?.count);
                 m.count = m?.count ? (m.count + 1) : 1
             }
-
             return m;
         })
         console.log(tempMenu);

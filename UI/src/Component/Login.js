@@ -59,18 +59,21 @@ const Login = (props) => {
             var userId = response.uid;
             var userEmail = userData.userEmail;
             if (res.status === 200) {
+                console.log(res.status)
                 let role = await getRole(userData);
+                console.log(role)
                 if (role.status === 200) {
                     var resRole = role.data;
                     var userRole = resRole.userRole;
                     console.log(resRole)
                     console.log(userId)
+                    localStorage.setItem('sessionEmail',userEmail);
+                    localStorage.setItem('sessionRole',userId);
                     var response = await axios.post('https://ti9nlzbjo4.execute-api.us-east-1.amazonaws.com/default/multifactorVerification?userID=' + userId + '&role=' + userRole)
                     var responseFromLambda = response.data;
                     console.log(responseFromLambda)
                     var securityQuestion = responseFromLambda.securityQuestion;
                     var answer = responseFromLambda.answer;
-                    props?.callback(true);
                     history.push({ pathname: '/multiFactor', securityQuestion: securityQuestion, answer: answer, role: userRole, email: userEmail });
                 } else {
                     window.alert("Role Fetching Failed.");
@@ -78,7 +81,6 @@ const Login = (props) => {
             } else {
                 window.alert("Authentication Failed.")
             }
-            //initialState()
         }
     }
 
@@ -114,7 +116,7 @@ const Login = (props) => {
                 </div>
                 <div className="form-group">
                     <div className="col-sm-offset-2 col-sm-10">
-                        <button type="" className="btn btn-default" onClick={() => props.callback(true)}>Login</button>
+                        <button type="" className="btn btn-default" onClick={handleLogin}>Login</button>
                     </div>
                 </div>
                 <div>

@@ -20,13 +20,11 @@ const RestaurantChat = () => {
     const [RestaurantChatError, setRestaurantChatError] = useState("")
 
     useEffect( async () => {
-        //let reply = await fetchChatMessage();
         const interval = setInterval( async () =>{ 
-            setRestaurantChatList(location.userMessagesList);
             let reply = await fetchChatMessage();
-            console.log(reply.data.messages)
-            setRestaurantChatList(reply.data.messages);
-        }, 1000);
+            var msg = reply.data.messages;
+            setRestaurantChatList((RestaurantChatList) => [...RestaurantChatList,msg]);
+        }, 10000);
     },[])
 
     const inputEventChat = (event) => {

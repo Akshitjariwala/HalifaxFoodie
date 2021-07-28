@@ -11,6 +11,7 @@ export const registerUser = (payload) => {
 };
 
 export const getRole = (payload) => {
+    console.log(payload);
     return axios.post('http://localhost:3001/FetchRole', payload)
         .then((res) => {
             return res;
@@ -19,11 +20,11 @@ export const getRole = (payload) => {
 };
 
 export const registerRestaurant = (restaurantRegistration) => {
-    return axios.post('http://localhost:3001/RegisterRestaurant',restaurantRegistration)
+    return axios.post('http://localhost:3001/RegisterRestaurant', restaurantRegistration)
         .then((res) => {
             return res;
         })
-        .catch(err => { return err.response})
+        .catch(err => { return err.response })
 };
 
 export const loginUser = (payload) => {
@@ -51,7 +52,7 @@ export const calculateML = (payload) => {
 };
 
 export const getMenuList = (payload) => {
-    return axios.post('http://localhost:3001/GetMenuList', payload)
+    return axios.get('http://localhost:3001/GetMenuList', { params: { payload } })
         .then((res) => {
             return res;
         })
@@ -68,7 +69,7 @@ export const placeOrder = (payload) => {
 
 export const getOrders = (payload) => {
     console.log(payload);
-    return axios.get('http://localhost:3001/getOrders',  {params:payload})
+    return axios.get('http://localhost:3001/getOrders', { params: payload })
         .then((res) => {
             return res;
         })
