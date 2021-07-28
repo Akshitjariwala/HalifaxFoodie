@@ -40,22 +40,26 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/Register", (req, res) => {
-  const userEmail = req.body.userEmail
-  const userPassword = req.body.userPassword;
   const userdata = req.body;
   const role = req.body.userRole;
   const securityQuestion = req.body.securityQuestion;
   const mfaAnswer = req.body.answer;
-  console.log(req.body);
-
-  if (userEmail != "" && userPassword != "") {
-    firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword).then((userCredential) => {
+  const userDetails = {};
+  userDetails["userRole"] = userdata.userRole;
+  userDetails["userPassword"] = userdata.userPassword;
+  userDetails["userName"] = userdata.userName;
+  userDetails["userEmail"] = userdata.userEmail;
+  userDetails["contactNumber"] = userdata.contactNumber;
+  userDetails["confirmPassword"] = userdata.confirmPassword;
+  
+  if (userdata.userEmail != "" && userdata.userPassword != "") {
+    firebase.auth().createUserWithEmailAndPassword(userdata.userEmail, userdata.userPassword).then((userCredential) => {
       const uid = userCredential.user.uid;
-      userdata.uid = uid;
+      userDetails["uid"] = uid;
       console.log(userdata.uid)
-      firestore.collection('Users').doc(userEmail).set(userdata).then(() => {
+      firestore.collection('Users').doc(userdata.userEmail).set(userDetails).then(() => {
         console.log('User added!');
-        axios.post('https://gnp1skts02.execute-api.us-east-1.amazonaws.com/default/securityQuestion?userID=' + uid + '&securityQuestion=' + securityQuestion + '&answer=' + mfaAnswer + '&role=' + role).then((response) => console.log(response));
+        axios.post('https://gnp1skts02.execute-api.us-east-1.amazonaws.com/default/securityQuestion?userID=' + uid + '&securityQuestion=' + securityQuestion + '&answer=' + mfaAnswer + '&role=' + userdata.userRole).then((response) => console.log(response));
       }).catch(function (error) {
         console.log(error.code);
         console.log(error.message);
@@ -208,12 +212,23 @@ app.post("/RegisterRestaurant", (req, res) => {
   const securityQuestion = req.body.securityQuestion;
   const mfaAnswer = req.body.answer;
   const role = req.body.userRole;
+
+  const restaurantDetails = {};
+  restaurantDetails["userRole"] = restaurantData.userRole;
+  restaurantDetails["userPassword"] = restaurantData.userPassword;
+  restaurantDetails["restaurantName"] = restaurantData.restaurantName;
+  restaurantDetails["userEmail"] = restaurantData.userEmail;
+  restaurantDetails["contactNumber"] = restaurantData.contactNumber;
+  restaurantDetails["confirmPassword"] = restaurantData.confirmPassword;
+  restaurantDetails["restaurantAddress"] = restaurantData.restaurantAddress;
+  restaurantDetails["restaurantDescription"] = restaurantData.restaurantDescription;
+  restaurantDetails["restaurantEmail"] = restaurantData.restaurantEmail;
+
   if (userEmail != "" && userPassword != "") {
     firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword).then((userCredential) => {
       const uid = userCredential.user.uid;
-      restaurantData.uid = uid;
-      console.log(restaurantData.uid)
-      firestore.collection('Restaurants').doc(userEmail).set(restaurantData).then(() => {
+      restaurantDetails["uid"] = uid;
+      firestore.collection('Restaurants').doc(userEmail).set(restaurantDetails).then(() => {
         console.log('Restaurent added!');
         axios.post('https://gnp1skts02.execute-api.us-east-1.amazonaws.com/default/securityQuestion?userID=' + uid + '&securityQuestion=' + securityQuestion + '&answer=' + mfaAnswer + '&role=' + role).then((response) =>
           console.log(response));
