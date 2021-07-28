@@ -41,7 +41,8 @@ const RestaurantHome = () => {
 
     return (
         <div className="tabBody">
-            <RestaurantNavBar userRole="customer" email="test@gmail.com" />
+            <RestaurantNavBar/>
+
             <div style={{ "margin-left": "250px" }}>
                 <h2>Restaurant Home</h2>
             </div>

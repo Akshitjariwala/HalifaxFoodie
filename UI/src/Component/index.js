@@ -12,3 +12,7 @@ export { default as Cart } from './Cart';
 export { default as Payment } from './Payment';
 export { default as AddMenu } from './AddMenu';
 export { default as RestaurantChat } from './RestaurantChat';
+export { default as WordCloud } from './WordCloud';
+export { default as Visualisation } from './Visualisation';
+
+

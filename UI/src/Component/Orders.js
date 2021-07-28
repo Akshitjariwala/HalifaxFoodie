@@ -18,21 +18,27 @@ const Orders = () => {
 
     const status = [{ prev: "PLACED", update: "ACCEPTED", buttonText: "ACCEPT" }, { prev: "ACCEPTED", update: "DISPATCHED", buttonText: "DISPATCH" }, { prev: "DISPATCHED", update: "COMPLETE", buttonText: "DELIVERED" }];
 
-    useEffect(async () => {
-        let creds = { key: 'customerEmail', email: 'test@gmail.com' };
+    var sessionEmail = localStorage.getItem('essionEmail');
+    var sesionRole = localStorage.getItem('sessionRole');
+
+    useEffect(async () => {    
+        var sessionEmail = localStorage.getItem('sessionEmail');
+        var sessionRole = localStorage.getItem('sessionRole');
+
+        let creds = { key: sessionRole=== 'user'? 'customerEmail' : 'restaurantEmail', email: sessionEmail };
         let response = await getOrders(creds);
         let tempOrders = response.data;
-        tempOrders = tempOrders.map((o) => {
+        tempOrders = tempOrders.map((ord) => {
             let tempSts;
-            if (o.orderStatus === 'COMPLETE') {
+            if (ord.orderStatus === 'COMPLETE') {
                 tempSts = { update: 'COMPLETE', buttonText: 'COMPLETE' };
             }
             else {
-                tempSts = status.filter(s => s.prev === o.orderStatus)[0];
+                tempSts = status.filter(s => s.prev === ord.orderStatus)[0];
             }
-            console.log(tempSts);
-            o = { ...o, orderedItems: JSON.parse(o.orderedItems), update: tempSts.update, buttonText: tempSts.buttonText };
-            return o;
+            console.log(tempSts, ord);
+            ord = { ...ord, orderedItems: JSON.parse(ord.orderedItems), update: tempSts.update, buttonText: tempSts.buttonText };
+            return ord;
         })
         setOrders(tempOrders);
     }, []);
@@ -42,10 +48,14 @@ const Orders = () => {
         console.log('update', respone);
     }
 
+    const handleVisualisation = () => {
+        history.push({ pathname: '/visualisation', orders });
+    }
+
     return (
         <div>
-            <RestaurantNavBar />
-            {/* <CustomerNavBar/> */}
+            {sesionRole === 'restaurant' && <RestaurantNavBar />}
+            {sesionRole === 'user' && <CustomerNavBar/>}
             <div style={{ "margin-left": "250px", marginTop: '6%' }}>
                 <h2>Orders</h2>
                 {orders?.length > 0 && <Accordion style={{ marginTop: '4%' }} defaultActiveKey={displayKey} >
@@ -94,6 +104,7 @@ const Orders = () => {
                     })}
                 </Accordion>
                 }
+                {orders?.length > 0 && <Button style={{marginTop: '12px'}} onClick={handleVisualisation}>Visualisation</Button>}
             </div>
         </div>
     );

@@ -273,10 +273,10 @@ app.post("/getSimilarity", (req, res) => {
   axios.post('https://us-central1-serverless-project-321023.cloudfunctions.net/halifax-foodie-ml', req.body)
     .then((response) => {
       console.log(response.data);
-      res.status(200).send({message:response.data});
+      res.status(200).send({ message: response.data });
     })
     .catch(() => {
-      
+
     });
   });
 

@@ -77,8 +77,7 @@ const ChatHome = () => {
 
     return (
         <div>
-            <RestaurantNavBar />
-            {/* <CustomerNavBar /> */}
+            <CustomerNavBar />
             <div class="container">
                 <h5>User Chat</h5>
                 <div class="row" style={{ "height": 400, "overflow-y": "scroll", "margin-top": 80, "margin-left": 220, "border-style": "groove" }}>

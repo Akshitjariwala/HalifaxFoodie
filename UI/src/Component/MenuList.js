@@ -5,13 +5,18 @@ import { useLocation } from "react-router-dom";
 import { BrowserRouter, Switch, Link, Route } from 'react-router-dom';
 import { getMenuList } from '../service';
 import { Badge, Button } from 'react-bootstrap';
+import CustomerNavBar from './CustomerNavBar';
+import RestaurantNavBar from './RestaurantNavBar';
 
 const MenuList = () => {
     const history = useHistory();
     const location = useLocation();
 
-    const [menuList, setMenuList] = useState("")
-    const [restaurenEmail, setRestaurantEmail] = useState("")
+    const [menuList, setMenuList] = useState("");
+    const [restaurantEmail, setRestaurantEmail] = useState("");
+    var sessionEmail = localStorage.getItem('sessionEmail');
+    var sessionRole = localStorage.getItem('sessionRole');
+    var sessionRestaurant = localStorage.getItem("sessionRestaurant");
 
     useEffect(() => {
         fetchMenu(localStorage.getItem('sessionRestaurant'));
@@ -23,7 +28,7 @@ const MenuList = () => {
         var list = menlist.data.menuList;
         console.log(list);
         setMenuList(list);
-   }
+    }
 
     const handleRestaurentClick = (event, data) => {
         alert(data);
@@ -65,16 +70,14 @@ const MenuList = () => {
             totalCost = totalCost + m.amount;
             return m;
         })
-        let orderDetails = { orderedItems: tempOrders, totalCost: totalCost, orderStatus: "PLACED", customerEmail: "test@gmail.com", restaurenEmail: "test@gmail.com" };
+        let orderDetails = { orderedItems: tempOrders, totalCost: totalCost, orderStatus: "PLACED", customerEmail: sessionEmail, restaurantEmail: sessionRestaurant };
         history.push({ pathname: '/cart', orderDetails });
     }
 
     return (
         <div className="tabBody">
-            <div className="homenav">
-                <Link to='/chatHome'>Chat</Link>
-                <Link to='/restaurantList'>Restaurant</Link>
-            </div>
+            {sessionRole === 'user' && <CustomerNavBar />}
+            {sessionRole === 'restaurant' && <RestaurantNavBar />}
 
             <div style={{ "margin-left": "250px", width: '50%' }}>
                 <h2>{location.restaurantName}</h2>
@@ -91,12 +94,11 @@ const MenuList = () => {
                                     <p><Link>{item.itemName}</Link></p>
                                     <p>Rs. {item.itemPrice}</p>
                                 </div>
-                                <div>
+                                {sessionRole === 'user' && <div>
                                     <Button onClick={() => { handleDecCount(index) }}> - </Button>
                                     <Button>{item?.count || 0}</Button>
                                     <Button onClick={() => { handleIncCount(index) }}> + </Button>
-
-                                </div>
+                                </div>}
                             </div>
                             <p>{item.itemDescription}</p>
                         </div>
@@ -105,7 +107,7 @@ const MenuList = () => {
                 )}
                 {menuList.length > 0 && <Button style={{ marginTop: '12px' }} onClick={handlePlaceOrder}> Place Orders </Button>}
             </div>
-        </div>
+        </div >
     );
 }
 

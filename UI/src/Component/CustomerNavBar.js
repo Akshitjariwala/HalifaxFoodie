@@ -22,7 +22,7 @@ const CustomerNavBar = () => {
             <Link to='/chatHome'>Chat</Link>
             <Link to='/restaurantList'>Restaurants</Link>
             <Link to='/orders'>Orders</Link>
-			<button><a href = 'http://wordcloud-env.eba-mrxri8ve.us-east-1.elasticbeanstalk.com/'>Feedback</a></button>
+			<a href = 'http://wordcloud-env.eba-mrxri8ve.us-east-1.elasticbeanstalk.com/'>Feedback</a>  
             <Link  onClick={logOutEvent}>Logout</Link>
         </div>
     );

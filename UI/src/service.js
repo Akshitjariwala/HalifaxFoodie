@@ -1,6 +1,4 @@
 import axios from 'axios';
-const cors = require("cors");
-
 
 export const registerUser = (payload) => {
     return axios.post('http://localhost:3001/Register', payload)
