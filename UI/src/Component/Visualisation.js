@@ -27,7 +27,8 @@ const Visualisation = (props) => {
     }, [])
     return (
         <div className="tabBody" style={{ marginRight: '20px', marginLeft: '250px'}}>
-            <RestaurantNavBar userRole="customer" email="test@gmail.com" />
+        {sessionRole === 'user' && <CustomerNavBar />}
+        {sessionRole === 'restaurant' && <RestaurantNavBar />}
 
             {data && <LineChart
                 xLabel="ORDER ID"

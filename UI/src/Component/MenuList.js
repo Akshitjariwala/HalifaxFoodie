@@ -72,44 +72,44 @@ const MenuList = () => {
             return m;
         })
         let orderDetails = { orderedItems: tempOrders, totalCost: totalCost, orderStatus: "PLACED", customerEmail: sessionEmail, restaurantEmail: sessionRestaurant };
-        history.push({ pathname: '/cart', orderDetails });
+history.push({ pathname: '/cart', orderDetails });
     }
 
-    return (
-        <div className="tabBody">
-            {sessionRole === 'user' && <CustomerNavBar />}
-            {sessionRole === 'restaurant' && <RestaurantNavBar />}
+return (
+    <div className="tabBody">
+        {sessionRole === 'user' && <CustomerNavBar />}
+        {sessionRole === 'restaurant' && <RestaurantNavBar />}
 
-            <div style={{ "margin-left": "250px", width: '50%' }}>
-                <h2>{location.restaurantName}</h2>
-                {menuList && menuList.map((item, index) =>
-                    <div style={{
-                        boxShadow: '0 1px 1px 0 rgb(0 0 0 / 20%)',
-                        transition: '0.3s',
-                        borderRadius: '5px', padding: '7px', marginBottom: '7px'
-                    }}>
-                        <div>
-                            <br></br>
-                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <div>
-                                    <p><Link>{item.itemName}</Link></p>
-                                    <p>Rs. {item.itemPrice}</p>
-                                </div>
-                                {sessionRole === 'user' && <div>
-                                    <Button onClick={() => { handleDecCount(index) }}> - </Button>
-                                    <Button>{item?.count || 0}</Button>
-                                    <Button onClick={() => { handleIncCount(index) }}> + </Button>
-                                </div>}
-                            </div>
-                            <p>{item.itemDescription}</p>
-                        </div>
+        <div style={{ "margin-left": "250px", width: '50%' }}>
+            <h2>{location.restaurantName}</h2>
+            {menuList && menuList.map((item, index) =>
+                <div style={{
+                    boxShadow: '0 1px 1px 0 rgb(0 0 0 / 20%)',
+                    transition: '0.3s',
+                    borderRadius: '5px', padding: '7px', marginBottom: '7px'
+                }}>
+                    <div>
                         <br></br>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <div>
+                                <p><Link>{item.itemName}</Link></p>
+                                <p>Rs. {item.itemPrice}</p>
+                            </div>
+                            {sessionRole === 'user' && <div>
+                                <Button onClick={() => { handleDecCount(index) }}> - </Button>
+                                <Button>{item?.count || 0}</Button>
+                                <Button onClick={() => { handleIncCount(index) }}> + </Button>
+                            </div>}
+                        </div>
+                        <p>{item.itemDescription}</p>
                     </div>
-                )}
-                {menuList.length > 0 && <Button style={{ marginTop: '12px' }} onClick={handlePlaceOrder}> Place Orders </Button>}
-            </div>
-        </div >
-    );
+                    <br></br>
+                </div>
+            )}
+            {menuList.length > 0 && <Button style={{ marginTop: '12px' }} onClick={handlePlaceOrder}> Place Orders </Button>}
+        </div>
+    </div >
+);
 }
 
 export default MenuList;

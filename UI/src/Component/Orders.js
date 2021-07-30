@@ -27,8 +27,8 @@ const Orders = () => {
 
         let creds = { key: sessionRole=== 'user'? 'customerEmail' : 'restaurantEmail', email: sessionEmail };
         let response = await getOrders(creds);
-        let tempOrders = response.data;
-        tempOrders = tempOrders.map((ord) => {
+        let tempOrders = Array.isArray(response?.data) ? response?.data : [response?.data];
+        tempOrders = tempOrders?.map((ord) => {
             let tempSts;
             if (ord.orderStatus === 'COMPLETE') {
                 tempSts = { update: 'COMPLETE', buttonText: 'COMPLETE' };

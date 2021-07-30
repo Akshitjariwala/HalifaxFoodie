@@ -12,6 +12,8 @@ const RestaurantNavBar = (props) => {
         let response = await logoutUser()
         console.log(response.status);
         if (response.status == 200) {
+            localStorage.removeItem("sessionEmail");
+            localStorage.removeItem("sessionRole");
             history.push("/login");
         } else {
             window.alert("Sign Out Failed!!")

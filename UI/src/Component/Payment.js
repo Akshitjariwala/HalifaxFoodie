@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { BrowserRouter, Switch, Link, Route } from 'react-router-dom';
 import { placeOrder } from '../service';
 import { Table, Button } from 'react-bootstrap';
+import CustomerNavBar from './CustomerNavBar';
 
 const Payment = () => {
     const history = useHistory();
@@ -19,18 +20,26 @@ const Payment = () => {
         console.log(location.orderDetails);
     }, [])
 
+    const handleChange = (event) => {
+        let pay = {...payment};
+        pay[event.target.name] = event.target.value;
+        setPayment(pay);
+    }
+
     const handlePayment = async () => {
         let orderDetails = location.orderDetails;
         let response = await placeOrder(orderDetails);
         if(response.status === 200) {
             console.log('reposne', response);
+            // history.push({ pathname: '/orders' });
         } else {
             console.log('err', response);
         }
     }
 
     return (
-        <div className="container tabBody">
+        <div className="container tabBody" style={{marginLeft: '250px'}}>
+            <CustomerNavBar/>
             <form className="form-horizontal" >
                 <div className="form-group">
                     <label className="control-label col-sm-2" for="cardNumber">Card Number :</label>
@@ -40,6 +49,7 @@ const Payment = () => {
                             id="cardNumber"
                             placeholder="Enter Card Number"
                             name="cardNumber"
+                            onChange={handleChange}
                             required={true}
                             value={payment.cardNumber} />
                     </div>
@@ -52,6 +62,7 @@ const Payment = () => {
                             id="cvv"
                             placeholder="Enter your CVV"
                             name="cvv"
+                            onChange={handleChange}
                             value={payment.cvv} />
                     </div>
                 </div>
