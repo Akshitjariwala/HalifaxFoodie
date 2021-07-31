@@ -29,18 +29,15 @@ const RestaurantChat = () => {
         const interval = setInterval( async () => {
             setSubscriptionRestaurant(localStorage.getItem('subscriptionUser'));
             console.log(subscriptionRestaurant);
-                var reply = '';
-                reply = await fetchChatMessage(subscriptionRestaurant);
+                var reply = await fetchChatMessage(subscriptionRestaurant);
                 if(reply.status == 200){
                     var msg = reply.data.messages;
                     msg = "User : "+msg;
                     setRestaurantChatList((RestaurantChatList) => [...RestaurantChatList,msg]);
                 }
-        }, 10* 1000);
-
+        }, 10 * 1000);
         return () => {
             var status = deleteSub();
-           
         }
     },[])
 
@@ -76,6 +73,7 @@ const RestaurantChat = () => {
             let res = await pushChatMessageRestaurant(RestaurantChat);
             console.log(res.status);
             if (res.status == 200) {
+                setRestaurantChat({ ...RestaurantChat, message: "" })
                 localStorage.setItem('subscriptionUser',res.data.subscription);
                 console.log(localStorage.getItem('subscriptionUser'));
             }
@@ -100,9 +98,10 @@ const RestaurantChat = () => {
 
     return (
         <div>
-            <div class="container">
+            <RestaurantNavBar />
+            <div class="container" style={{"margin-top": "5%"}}>
+            <h2 style={{"margin-left":220}}>Restaurant Chat</h2>
                 <div class="row" style={{ "height": 400, "overflow-y": "scroll", "margin-left": 220, "border-style": "groove" }}>
-                    <RestaurantNavBar />
                     <div class="col-sm-9">
                         <div id="section1" >
                         {RestaurantChatList && RestaurantChatList.map(chat =>

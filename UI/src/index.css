@@ -136,6 +136,7 @@ button.main {
 .container {
   margin-top: 10%;
 }
+
 input::placeholder {
 	color: #ccc;
 	font-style: italic;

@@ -148,7 +148,7 @@ const RestaurantRegistration = () => {
             console.log(res.status);
             if (res.status === 200) {
                 window.alert("User Successfully Registerred.")
-                //history.push("/login");
+                history.push("/login");
             } else {
                 window.alert("User Registration Failed.")
             }
@@ -162,7 +162,7 @@ const RestaurantRegistration = () => {
     const dropDownStyle = { width: "945px" };
 
     return (
-        <div className="container tabBody">
+        <div className="container tabBody" style={{"margin-top":"5%"}}>
             <form className="form-horizontal" onSubmit={handleRestaurantRegister}>
                 <div className="form-group">
                     <label className="control-label col-sm-2" for="restaurantName">Restaurant Name:</label>

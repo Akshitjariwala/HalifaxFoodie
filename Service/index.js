@@ -304,19 +304,20 @@ app.post("/getSimilarity", (req, res) => {
     const topicName = 'InstantMessaging';
     var subscriptionName = "sub_"+req.body.userEmail;
     subscriptionName = subscriptionName.replace('@','').replace('.','')
+    //getSubscription(subscriptionName,topicName,message)
 
     async function getSubscription(subscriptionName,topicName,message) {
       var sub =  'projects/airy-sight-315818/subscriptions/'+subscriptionName;
       const [subscriptions] = await pubSubClient.getSubscriptions();
       subscriptions.forEach(subscription => {
-        if(!subscription.name === sub) {
+        console.log(subscription.name+" --- "+sub)
+        if(!(subscription.name == sub)) {
           createDynamicSubscription(topicName,subscriptionName)
         }
       });   
     }
 
     pubSubClient.topic(topicName).publish(message).then((messageId) => {
-      getSubscription(subscriptionName,topicName,message)
       console.log('Message ', { messageId }, 'Sent Successfully');
       res.status(200).send({subscription:subscriptionName});
     }).catch((err) => {
@@ -335,15 +336,15 @@ app.post("/getSimilarity", (req, res) => {
     const topicName = 'InstantMessagingRestaurant';
     var subscriptionName = "sub_"+req.body.userEmail;
     subscriptionName = subscriptionName.replace('@','').replace('.','')
-
+    //getSubscription(subscriptionName,topicName,message)
     async function getSubscription(subscriptionName,topicName,message) {
-
       var sub =  'projects/airy-sight-315818/subscriptions/'+subscriptionName;
       const [subscriptions] = await pubSubClient.getSubscriptions();
       subscriptions.forEach(subscription => {
-        if(!subscription.name === sub) {
+        console.log(subscription.name+" --- "+sub)
+        if(!(subscription.name == sub)) {
           createDynamicSubscription(topicName,subscriptionName)
-        } 
+        }
       });   
     }
 
@@ -387,6 +388,7 @@ app.post("/getSimilarity", (req, res) => {
         messageList.push(message.data.toString());
         message.ack();
       };
+
       if(subscriptionName.length>0){
         const subscription = pubSubClient.subscription(subscriptionName);
         subscription.on('message', messageHandler);

@@ -75,6 +75,7 @@ const ChatHome = () => {
             res = await pushChatMessage(userChat);
             console.log(res.status);
             if (res.status == 200) {
+                setuserChat({ ...userChat, message: "" })
                 localStorage.setItem('subscriptionRestaurant',res.data.subscription);
                 console.log(localStorage.getItem('subscriptionRestaurant'));
             }
@@ -100,8 +101,8 @@ const ChatHome = () => {
     return (
         <div>
             <CustomerNavBar />
-            <div class="container">
-                <h5>User Chat</h5>
+            <div class="container" style={{"margin-top": "5%"}}>
+                <h2 style={{"margin-left":220}}>User Chat</h2>
                 <div class="row" style={{ "height": 400, "overflow-y": "scroll", "margin-left": 220, "border-style": "groove" }}>
                     <div class="col-sm-9" style={{ "margin-left": "" }}>
                         <div id="section1" >

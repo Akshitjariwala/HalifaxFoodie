@@ -133,3 +133,13 @@ export const logoutUser = () => {
         })
         .catch(err => { return err.response })
 };
+
+export const deleteSubscription = () => {
+    return axios.post('http://localhost:3001/DeleteSubscription')
+        .then((res) => {
+            console.log(res)
+            return res;
+        })
+        .catch(err => { return err.response })
+};
+

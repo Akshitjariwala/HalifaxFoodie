@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { loginUser } from '../service';
 import { useHistory } from "react-router-dom";
 import { getRole } from '../service';
+import { BrowserRouter,Redirect, Switch, Link, Route } from 'react-router-dom';
 import axios from 'axios';
 
 const Login = (props) => {
@@ -85,6 +86,18 @@ const Login = (props) => {
     }
 
     return (
+        <div>
+        <nav className="navbar navbar-inverse navbar-fixed-top">
+                {<div className="container-fluid" style={{ float: 'right' }}>
+                    <div className="collapse navbar-collapse" id="myNavbar">
+                        <ul className="nav navbar-nav">
+                            <li><Link to='/login'>Login</Link></li>
+                            <li><Link to='/customerRegistration'>Register as User</Link></li>
+                            <li><Link to='/restaurantRegistration'>Register as Restaurant</Link></li>
+                        </ul>
+                    </div>
+                </div>}
+            </nav>
         <div className="container tabBody">
             <form className="form-horizontal" onSubmit={handleLogin}>
                 <div className="form-group">
@@ -122,6 +135,7 @@ const Login = (props) => {
                 <div>
                 </div>
             </form>
+        </div>
         </div>
     );
 }
