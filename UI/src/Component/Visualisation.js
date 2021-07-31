@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import RestaurantNavBar from './RestaurantNavBar';
+import CustomerNavBar from './CustomerNavBar';
 import { useLocation } from "react-router-dom";
 import LineChart from 'react-linechart';
 
 const Visualisation = (props) => {
     const [data, setData] = useState(null);
     const location = useLocation();
+
+    var sessionEmail = localStorage.getItem('sessionEmail');
+    var sessionRole = localStorage.getItem('sessionRole');
 
     useEffect(() => {
         let orders = Array.isArray(location.orders) ? location.orders : [location.orders];
