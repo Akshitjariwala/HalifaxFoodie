@@ -30,11 +30,15 @@ const RestaurantChat = () => {
             setSubscriptionRestaurant(localStorage.getItem('subscriptionUser'));
             console.log(subscriptionRestaurant);
                 var reply = await fetchChatMessage(subscriptionRestaurant);
-                if(reply.status == 200){
-                    var msg = reply.data.messages;
-                    msg = "User : "+msg;
-                    setRestaurantChatList((RestaurantChatList) => [...RestaurantChatList,msg]);
+                console.log(reply)
+                if(reply !== "NA"){
+                    if(reply.status == 200){
+                        var msg = reply.data.messages;
+                        msg = "User : "+msg;
+                        setRestaurantChatList((RestaurantChatList) => [...RestaurantChatList,msg]);
+                    }
                 }
+                
         }, 10 * 1000);
         return () => {
             var status = deleteSub();
@@ -70,9 +74,10 @@ const RestaurantChat = () => {
         if (validate(RestaurantChat)) {
             var userMsg = "Restaurant : "+RestaurantChat.message;
             setRestaurantChatList((RestaurantChatList) => [...RestaurantChatList,userMsg]);
-            let res = await pushChatMessageRestaurant(RestaurantChat);
-            console.log(res.status);
-            if (res.status == 200) {
+            let res = ''
+            res = await pushChatMessageRestaurant(RestaurantChat);
+                console.log(res.status);
+                if (res.status == 200) {
                 setRestaurantChat({ ...RestaurantChat, message: "" })
                 localStorage.setItem('subscriptionUser',res.data.subscription);
                 console.log(localStorage.getItem('subscriptionUser'));

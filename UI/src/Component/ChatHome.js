@@ -24,11 +24,16 @@ const ChatHome = () => {
         const interval = setInterval( async () =>{ 
             setSubscriptionUser(localStorage.getItem('subscriptionRestaurant'));
             console.log(subscriptionUser);
-                let reply = await fetchChatMessageRestaurant(subscriptionUser);
-                if(reply.status == 200){
-                    var msg = reply.data.messages;
-                    msg = "Restaurant : "+msg;
-                    setUserChatList((userChatList) => [...userChatList,msg]);
+                let reply = ''
+                reply = await fetchChatMessageRestaurant(subscriptionUser);
+                console.log(reply)
+                if((reply !== "NA")){
+                    console.log("Test")
+                    if(reply.status == 200){
+                        var msg = reply.data.messages;
+                        msg = "Restaurant : "+msg;
+                        setUserChatList((userChatList) => [...userChatList,msg]);
+                    }
                 }
         }, 10*1000);
         return () => {

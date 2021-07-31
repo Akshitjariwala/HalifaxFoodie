@@ -265,10 +265,10 @@ app.post("/Login", (req, res) => {
       console.log(error.code);
       console.log(error.message);
       window.alert("Error Message : " + error.message);
-      res.status(400).send();
+      res.status(400).send("NA");
     })
   } else {
-    res.status(400).send();
+    res.status(400).send("NA");
   }
 });
 
@@ -396,7 +396,7 @@ app.post("/getSimilarity", (req, res) => {
         setTimeout(() => {
           subscription.removeListener('message', messageHandler);
           if(messageList.length<=0){
-            res.status(400).send();
+            res.status(400).send("NA");
           } else {
             console.log(`${count} message(s) received.`);
             console.log(messageList);
@@ -429,7 +429,7 @@ app.post("/getSimilarity", (req, res) => {
       setTimeout(() => {
         subscription.removeListener('message', messageHandler);
         if(messageList.length <= 0){
-          res.status(400).send();
+          res.status(400).send("NA");
         } else {
           console.log(`${count} message(s) received.`);
           console.log(messageList);
