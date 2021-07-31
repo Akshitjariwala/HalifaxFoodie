@@ -11,6 +11,9 @@ const CustomerNavBar = () => {
         let response = await logoutUser()
         console.log(response.status);
         if (response.status == 200) {
+            localStorage.removeItem("sessionEmail");
+            localStorage.removeItem("sessionRole");
+
             history.push("/login");
         } else {
             window.alert("Sign Out Failed!!")
@@ -22,8 +25,8 @@ const CustomerNavBar = () => {
             <Link to='/chatHome'>Chat</Link>
             <Link to='/restaurantList'>Restaurants</Link>
             <Link to='/orders'>Orders</Link>
-			<a href = 'http://wordcloud-env.eba-mrxri8ve.us-east-1.elasticbeanstalk.com/'>Feedback</a>  
-            <Link  onClick={logOutEvent}>Logout</Link>
+            <a href='http://wordcloud-env.eba-mrxri8ve.us-east-1.elasticbeanstalk.com/'>Feedback</a>
+            <Link onClick={logOutEvent}>Logout</Link>
         </div>
     );
 }

@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 export const registerUser = (payload) => {
-    console.log(payload);
     return axios.post('http://localhost:3001/Register', payload)
         .then((res) => {
             return res;
@@ -51,7 +50,6 @@ export const calculateML = (payload) => {
 };
 
 export const getMenuList = (payload) => {
-
     return axios.get('http://localhost:3001/GetMenuList', { params: { payload } })
         .then((res) => {
             return res;
@@ -135,14 +133,3 @@ export const logoutUser = () => {
         })
         .catch(err => { return err.response })
 };
-
-export const deleteSubscription = (payload) => {
-    return axios.post('http://localhost:3001/DeleteSubscription',payload)
-        .then((res) => {
-            console.log(res)
-            return res;
-        })
-        .catch(err => { return err.response })
-};
-
-
