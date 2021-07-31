@@ -31,19 +31,19 @@ const Payment = () => {
         let response = await placeOrder(orderDetails);
         if(response.status === 200) {
             console.log('reposne', response);
-            // history.push({ pathname: '/orders' });
+            history.push({ pathname: '/orders' });
         } else {
             console.log('err', response);
         }
     }
 
     return (
-        <div className="container tabBody" style={{marginLeft: '250px'}}>
+        <div className=" tabBody" style={{marginLeft: '250px'}}>
             <CustomerNavBar/>
             <form className="form-horizontal" >
                 <div className="form-group">
                     <label className="control-label col-sm-2" for="cardNumber">Card Number :</label>
-                    <div className="col-sm-10">
+                    <div className="col-sm-8">
                         <input type="type"
                             className="form-control"
                             id="cardNumber"
@@ -56,7 +56,7 @@ const Payment = () => {
                 </div>
                 <div className="form-group">
                     <label className="control-label col-sm-2" for="itemDescription">CVV :</label>
-                    <div className="col-sm-10">
+                    <div className="col-sm-8">
                         <input type="type"
                             className="form-control"
                             id="cvv"
@@ -66,7 +66,7 @@ const Payment = () => {
                             value={payment.cvv} />
                     </div>
                 </div>
-                <Button style={{float: 'right'}} onClick={handlePayment}>PAY</Button>
+                <Button className="col-sm-1" style={{float: 'right', marginRight: '17%'}} onClick={handlePayment}>PAY</Button>
             </form>
         </div>
     );
