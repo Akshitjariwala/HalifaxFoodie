@@ -302,13 +302,29 @@ app.post("/getSimilarity", (req, res) => {
     const messageBody = data.toString();
     const message = Buffer.from(data);
     const topicName = 'InstantMessaging';
+    var subscriptionName = "sub_"+req.body.userEmail;
+    subscriptionName = subscriptionName.replace('@','').replace('.','')
+
+    async function getSubscription(subscriptionName,topicName,message) {
+      var sub =  'projects/airy-sight-315818/subscriptions/'+subscriptionName;
+      const [subscriptions] = await pubSubClient.getSubscriptions();
+      subscriptions.forEach(subscription => {
+        if(!subscription.name === sub) {
+          createDynamicSubscription(topicName,subscriptionName)
+        }
+      });   
+    }
+
     pubSubClient.topic(topicName).publish(message).then((messageId) => {
+      getSubscription(subscriptionName,topicName,message)
       console.log('Message ', { messageId }, 'Sent Successfully');
-      res.status(200).send();
+      res.status(200).send({subscription:subscriptionName});
     }).catch((err) => {
       console.error('ERROR:', err);
     });
+    
   });
+
   
   // For Restaurant
   app.post("/PublishChatMessageRestaurant", (req, res) => {
@@ -317,18 +333,50 @@ app.post("/getSimilarity", (req, res) => {
     const messageBody = data.toString();
     const message = Buffer.from(data);
     const topicName = 'InstantMessagingRestaurant';
+    var subscriptionName = "sub_"+req.body.userEmail;
+    subscriptionName = subscriptionName.replace('@','').replace('.','')
+
+    async function getSubscription(subscriptionName,topicName,message) {
+
+      var sub =  'projects/airy-sight-315818/subscriptions/'+subscriptionName;
+      const [subscriptions] = await pubSubClient.getSubscriptions();
+      subscriptions.forEach(subscription => {
+        if(!subscription.name === sub) {
+          createDynamicSubscription(topicName,subscriptionName)
+        } 
+      });   
+    }
+
     pubSubClient.topic(topicName).publish(message).then((messageId) => {
+      getSubscription(subscriptionName,topicName,message)
       console.log('Message ', { messageId }, 'Sent Successfully');
-      res.status(200).send();
+      res.status(200).send({subscription:subscriptionName});
     }).catch((err) => {
-      console.error('ERROR:', err); 
+      console.error('ERROR:', err);
     });
+    
   });
+
+  async function createDynamicSubscription(topicName,subscriptionName) {
+    await pubSubClient.topic(topicName).createSubscription(subscriptionName);
+  }
+
+  app.post("/DeleteSubscription",(req,res) => {
+      var subscriptionName = req.body.subscription;
+      deleteSubscription(subscriptionName);
+      res.status(200).send();
+  });
+
+  async function deleteSubscription(subscriptionName){
+    await pubSubClient.subscription(subscriptionName).delete();
+  }
   
   app.get("/GetChatMessage", (req, res) => {
     console.log("In Get User Chat.")
-    fetchMessages();
-    async function fetchMessages(){
+    const subscriptionName = req.query.payload;
+    console.log("User message body "+subscriptionName);
+    fetchMessages(subscriptionName);
+    async function fetchMessages(subscriptionName1) {
       var messageList = []
       const subscriptionName = "InstantMessagingSub-Restaurant";
       var count = 0;
@@ -339,27 +387,29 @@ app.post("/getSimilarity", (req, res) => {
         messageList.push(message.data.toString());
         message.ack();
       };
-      const subscription = pubSubClient.subscription(subscriptionName);
-  
-      subscription.on('message', messageHandler);
-      
-      setTimeout(() => {
-        subscription.removeListener('message', messageHandler);
-        if(messageList.length<=0){
-          res.status(400).send();
-        } else {
-          console.log(`${count} message(s) received.`);
-          console.log(messageList);
-          res.status(200).send({messages:messageList});
-        }
-      }, 10 * 1000);
+      if(subscriptionName.length>0){
+        const subscription = pubSubClient.subscription(subscriptionName);
+        subscription.on('message', messageHandler);
+        setTimeout(() => {
+          subscription.removeListener('message', messageHandler);
+          if(messageList.length<=0){
+            res.status(400).send();
+          } else {
+            console.log(`${count} message(s) received.`);
+            console.log(messageList);
+            res.status(200).send({messages:messageList});
+          }
+        }, 10 * 1000);
+      }
     }
   });
   
   app.get("/GetChatMessageRestaurant", (req, res) => {
     console.log("In Get Restaurant Chat.")
-    fetchRestaurantMessages();
-    async function fetchRestaurantMessages(){
+    const subscriptionName = req.query.payload;
+    console.log("Restaurant message body "+subscriptionName);
+    fetchRestaurantMessages(subscriptionName);
+    async function fetchRestaurantMessages(subscriptionName1){
       var messageList = []
       const subscriptionName = "InstantMessagingSub-User";
       var count = 0;
@@ -370,11 +420,9 @@ app.post("/getSimilarity", (req, res) => {
         messageList.push(message.data.toString());
         message.ack();
       };
-  
-      const subscription = pubSubClient.subscription(subscriptionName);
-  
-      subscription.on('message', messageHandler);
-  
+      if(subscriptionName.length>0){
+        const subscription = pubSubClient.subscription(subscriptionName);
+        subscription.on('message', messageHandler);
       setTimeout(() => {
         subscription.removeListener('message', messageHandler);
         if(messageList.length <= 0){
@@ -384,8 +432,8 @@ app.post("/getSimilarity", (req, res) => {
           console.log(messageList);
           res.status(200).send({messages:messageList});
         }
-        
         }, 10 * 1000);
+      }
     }
   });
   

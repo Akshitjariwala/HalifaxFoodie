@@ -67,7 +67,7 @@ export const placeOrder = (payload) => {
 
 export const getOrders = (payload) => {
     console.log(payload);
-    return axios.get('http://localhost:3001/getOrders', { params: payload })
+    return axios.get('http://localhost:3001/getOrders',{ params: { payload } })
         .then((res) => {
             return res;
         })
@@ -98,8 +98,9 @@ export const pushChatMessage = (payload) => {
         .catch(err => { return err.response })
 };
 
-export const fetchChatMessage = () => {
-    return axios.get('http://localhost:3001/GetChatMessage')
+export const fetchChatMessage = (payload) => {
+    console.log("in fetch message"+payload);
+    return axios.get('http://localhost:3001/GetChatMessage',{ params: { payload } })
         .then((res) => {
             return res;
         })
@@ -114,8 +115,9 @@ export const pushChatMessageRestaurant = (payload) => {
         .catch(err => { return err.response })
 };
 
-export const fetchChatMessageRestaurant = () => {
-    return axios.get('http://localhost:3001/GetChatMessageRestaurant')
+export const fetchChatMessageRestaurant = (payload) => {
+    console.log("in fetch message"+payload);
+    return axios.get('http://localhost:3001/GetChatMessageRestaurant',{ params: {payload} })
         .then((res) => {
             console.log(res)
             return res;
