@@ -10,8 +10,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/firestore": "^4.13.2",
+    "@google-cloud/pubsub": "^2.16.1",
+    "aws-api-gateway-client": "^0.3.7",
+    "aws-sdk": "^2.950.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mysql": "^2.18.1"
+    "firebase": "^8.7.1",
+    "firebase-admin": "^9.11.0",
+    "firebase-functions": "^3.14.1",
+    "mysql": "^2.18.1",
+    "xhr2": "^0.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.31.0",
+    "ws": "^7.5.3",
+    "xmlhttprequest": "^1.8.0"
   }
 }
