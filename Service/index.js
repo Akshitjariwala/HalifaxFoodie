@@ -2,6 +2,7 @@ const firebase = require('firebase');
 const express = require("express");
 const mysql = require("mysql");
 const app = express();
+const port = process.env.PORT || 8080;
 const cors = require("cors");
 const functions = require("firebase-functions");
 var AWS = require('aws-sdk/dist/aws-sdk-react-native');
@@ -456,6 +457,7 @@ app.post("/Logout", (req, res) => {
   })
 });
 
-app.listen(3001, () => {
-  console.log("Login server is running on port 3001");
+//setting up the server
+app.listen(port, () => {
+  console.log(`helloworld: listening on port ${port}`);
 });
