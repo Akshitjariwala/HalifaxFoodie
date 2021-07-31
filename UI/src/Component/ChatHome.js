@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { pushChatMessage, fetchChatMessage, fetchChatMessageRestaurant, pushChatMessageRestaurant } from '../service';
-import { logoutUser } from '../service';
+import { logoutUser,deleteSubscription } from '../service';
 import RestaurantNavBar from './RestaurantNavBar';
 import CustomerNavBar from './CustomerNavBar';
 
@@ -14,19 +14,37 @@ const ChatHome = () => {
     const history = useHistory();
     const location = useLocation();
 
+    const [subscription, setSubscription] = useState({
+        subscription: "",
+    })
+
+    const [subscriptionUser, setSubscriptionUser] = useState("")
+
     useEffect(async () => {
         const interval = setInterval( async () =>{ 
-            let reply = await fetchChatMessageRestaurant();
-            if(reply.status == 200){
-                var msg = reply.data.messages;
-                msg = "Restaurant : "+msg;
-                setUserChatList((userChatList) => [...userChatList,msg]);
-            }
+            setSubscriptionUser(localStorage.getItem('subscriptionRestaurant'));
+            console.log(subscriptionUser);
+                let reply = await fetchChatMessageRestaurant(subscriptionUser);
+                if(reply.status == 200){
+                    var msg = reply.data.messages;
+                    msg = "Restaurant : "+msg;
+                    setUserChatList((userChatList) => [...userChatList,msg]);
+                }
         }, 10*1000);
+        return () => {
+            var status = deleteSub();
+        }
     },[])
 
+    async function deleteSub(){
+        setSubscription(localStorage.getItem('subscriptionRestaurant'));
+            let res = await deleteSubscription(subscription);
+            return res.status;
+    }
+
     const [userChat, setuserChat] = useState({
-        message: ""
+        message: "",
+        userEmail:localStorage.getItem('sessionEmail')
     })
     const [userChatError, setUserChatError] = useState("")
     const [userChatList, setUserChatList] = useState("")
@@ -57,7 +75,8 @@ const ChatHome = () => {
             res = await pushChatMessage(userChat);
             console.log(res.status);
             if (res.status == 200) {
-                //
+                localStorage.setItem('subscriptionRestaurant',res.data.subscription);
+                console.log(localStorage.getItem('subscriptionRestaurant'));
             }
         } else {
             console.log("Chat message Empty.");
