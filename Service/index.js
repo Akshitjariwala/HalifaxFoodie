@@ -26,9 +26,9 @@ const db = mysql.createConnection({
 
 // To access firebase database.
 var firebaseConfig = {
-  apiKey: "AIzaSyAQSUDEnIWTE8r2-7PieXAYsmU--JGd4sI",
-  authDomain: "halifaxfoodie-1c6fc.firebaseapp.com",
-  projectId: "halifaxfoodie-1c6fc",
+  apiKey: "",
+  authDomain: "",
+  projectId: "",
   storageBucket: "halifaxfoodie-1c6fc.appspot.com",
   messagingSenderId: "662125797776",
   appId: "1:662125797776:web:dda44fb84afcf45de71315"
